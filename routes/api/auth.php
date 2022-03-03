@@ -1,9 +1,12 @@
 <?php
+
+use Controllers\AuthController;
 use Pecee\SimpleRouter\SimpleRouter;
-use Pecee\Http\Request ;
+
 
 SimpleRouter::group(['prefix' => '/auth'], function() {
-    SimpleRouter::post('/', function (){
+
+    SimpleRouter::post('/', function () {
         return "Auth Index";
     });
 

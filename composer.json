@@ -1,5 +1,7 @@
 {
     "require": {
-        "pecee/simple-router": "4.3.7.2"
+        "doctrine/orm": "*",
+        "pecee/simple-router": "4.3.7.2",
+        "vlucas/phpdotenv": "^5.4"
     }
 }
