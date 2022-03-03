@@ -1,11 +1,13 @@
 <?php
 
-require 'dotenv.php';
+require_once 'dotenv.php';
 
-require 'config.php';
+require_once 'config.php';
 
-require 'bootstrap/functions/index.php';
+require_once 'bootstrap/functions.php';
 
-require 'bootstrap/router.php';
+//require_once 'bootstrap/database.php';
+
+require_once 'bootstrap/router.php';
 
 

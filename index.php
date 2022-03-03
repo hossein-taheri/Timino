@@ -1,7 +1,7 @@
 <?php
 
-require 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
-require 'bootstrap/index.php';
+require_once 'bootstrap/index.php';
 
 

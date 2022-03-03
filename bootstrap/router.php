@@ -1,11 +1,10 @@
 <?php
-use Pecee\Http\Request;
 use Pecee\SimpleRouter\SimpleRouter;
+
+require_once "controllers/AuthController.php";
 
 SimpleRouter::setDefaultNamespace('Controllers');
 
-require 'routes/index.php';
-
-// TODO : add NotFound and ErrorHandler
+require_once 'routes/index.php';
 
 SimpleRouter::start();

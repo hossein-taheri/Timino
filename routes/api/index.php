@@ -3,8 +3,8 @@
 use Helpers\CustomExceptionHandler;
 use Pecee\SimpleRouter\SimpleRouter;
 
-SimpleRouter::group(['exceptionHandler' => CustomExceptionHandler::class,'prefix' => '/api'], function() {
+SimpleRouter::group(['prefix' => '/api'], function() {
 
-    require "routes/api/auth.php";
+    require_once  "routes/api/auth.php";
 
 });

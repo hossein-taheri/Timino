@@ -2,11 +2,28 @@
 namespace Controllers;
 
 class AuthController{
-
-    public static function index()
+    public function register()
     {
-        return "Index AuthController";
-        // TODO: Implement index() method.
+        return "AuthController Register";
     }
 
+    public function verifyEmail()
+    {
+        return "AuthController VerifyEmail";
+    }
+
+    public function login()
+    {
+        return "AuthController Login";
+    }
+
+    public function refreshToken()
+    {
+        return "AuthController RefreshToken";
+    }
+
+    public function forgotPassword()
+    {
+        return "AuthController RefreshToken";
+    }
 }
