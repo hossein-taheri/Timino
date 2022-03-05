@@ -1,18 +1,23 @@
 <?php
-use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\EntityManager;
-
-$paths = array("models/");
-$isDevMode = false;
-
-$dbParams = array(
-    'driver'   => 'pdo_mysql',
-    'user'     => $app['config']['database']['username'],
-    'password' => $app['config']['database']['password'],
-    'dbname'   => $app['config']['database']['dbname'],
-);
 
 
-$config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
+class Connection
+{
+    public static function make($db)
+    {
+        try {
+            $pdo = new PDO(
+                "{$db['connection']};",
+                $db['username'],
+                $db['password']
+            );
+            $pdo->query("CREATE DATABASE IF NOT EXISTS ".$db['dbname']);
+            $pdo->query("use ".$db['dbname']);
+            return $pdo;
+        } catch (PDOException $e) {
+            die("Couldn't connect to DB::".$e->getMessage());
+        }
+    }
+}
 
-$entityManager = EntityManager::create($dbParams, $config);
+$app['pdo'] = Connection::make($app['config']['database']);
