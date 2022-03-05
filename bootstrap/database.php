@@ -1,5 +1,7 @@
 <?php
 
+require "migrations/UserMigration.php";
+use Migration\UserMigration;
 
 class Connection
 {
@@ -20,4 +22,9 @@ class Connection
     }
 }
 
+
 $app['pdo'] = Connection::make($app['config']['database']);
+
+
+UserMigration::create($app['pdo']);
+
