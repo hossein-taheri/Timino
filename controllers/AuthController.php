@@ -1,6 +1,9 @@
 <?php
 namespace Controllers;
 
+require "repositories/UserRepository.php";
+use Repository\UserRepository;
+
 class AuthController{
     public function register()
     {
@@ -14,7 +17,7 @@ class AuthController{
 
     public function login()
     {
-        return "AuthController Login";
+        echo json_encode(UserRepository::findOneById(1));
     }
 
     public function refreshToken()
