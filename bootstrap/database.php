@@ -4,7 +4,7 @@ require "migrations/UserMigration.php";
 use Migration\UserMigration;
 
 try {
-    $db = $app['config']['database'];
+    $db = $GLOBALS['config']['database'];
     $pdo = new PDO(
         "{$db['connection']};",
         $db['username'],
