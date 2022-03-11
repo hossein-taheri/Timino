@@ -12,5 +12,5 @@ SimpleRouter::group(['prefix' => '/auth'], function() {
 
     SimpleRouter::post('/refresh-token', 'AuthController@refreshToken')->setName('auth.refreshToken');
 
-    SimpleRouter::post('/forgot-password', 'AuthController@forgotPassword')->setName('auth.forgotPassword');
+    SimpleRouter::post('/forgot-password/set-password', 'AuthController@forgotPasswordSetPassword')->setName('auth.forgotPassword');
 });

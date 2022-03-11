@@ -22,6 +22,14 @@ class UserRepository {
         $statement->execute();
         return $statement->fetchAll()[0];
     }
+    public static function updatePasswordByEmail($email, $password){
+        $pdo = $GLOBALS['pdo'];
+        $query = "UPDATE users SET password = :password WHERE email = :email";
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(":email", $email);
+        $statement->bindParam(":password", $password);
+        $statement->execute();
+    }
     public static function create(){
         //TODO :: write create user query
     }
