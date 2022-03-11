@@ -8,6 +8,7 @@ require_once "helpers/JWT.php";
 
 use ForbiddenException;
 use Helpers\EmailDispatcher;
+use Helpers\Response;
 use JWTHelper;
 use Repository\UserRepository;
 
@@ -36,14 +37,12 @@ class AuthController{
             throw new ForbiddenException("The entered username or password is not correct");
         }
 
-        return json_encode(JWTHelper::encodeAccessToken($user['id']));
+        $token = JWTHelper::encodeAccessToken($user['id']);
+        return Response::message(null,$token);
     }
 
     public function refreshToken()
     {
-//        $emailDispatcher = new EmailDispatcher;
-//        $emailDispatcher::send(['htaheri550@gmail.com'],'Subject','<h1>Message</h1>');
-//        echo json_encode(UserRepository::findOneById(1));
     }
 
     public function forgotPassword()
