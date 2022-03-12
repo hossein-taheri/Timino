@@ -21,6 +21,6 @@ class ForgotPasswordRepository {
     $statement->bindParam(":verified_code", $verified_code);
     $statement->bindParam(":expires_at", $expires_at);
     $statement->execute();
-    return $statement->fetchAll()[0];
+    return $statement->fetchAll();
    }
 }

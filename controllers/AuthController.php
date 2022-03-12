@@ -7,7 +7,6 @@ require_once "repositories/UserRepository.php";
 require_once "repositories/ForgotPasswordRepository.php";
 require_once "helpers/JWT.php";
 
-use Cassandra\Date;
 use ForbiddenException;
 use NotFoundException;
 use Helpers\EmailDispatcher;
@@ -20,15 +19,18 @@ class AuthController{
     public function register()
     {
         $user = UserRepository::findOneByEmailOrUsername($_POST['email'],$_POST['username']);
-        if($user == '')
-        {
-            UserRepository::create($_POST['username'],$_POST['f_name'],$_POST['l_name'],$_POST['email'],$_POST['password']);
-        }
-        else
+
+        if($user != null)
         {
             throw new ForbiddenException("The entered username or email is exist");
         }
-        return "AuthController Register";
+
+        UserRepository::create($_POST['username'],$_POST['f_name'],$_POST['l_name'],$_POST['email'],$_POST['password']);
+
+        return Response::message(
+            null,
+            null
+        );
     }
 
     public function verifyEmail()
@@ -36,12 +38,9 @@ class AuthController{
         return "AuthController VerifyEmail";
     }
 
-    /**
-     * @throws ForbiddenException
-     */
     public function login()
     {
-        $user = UserRepository::findOneByEmailOrUsername($_POST['username']);
+        $user = UserRepository::findOneByEmailOrUsername($_POST['username'], $_POST['username']);
         if ( $user == null ){
             throw new ForbiddenException("The entered username or password is not correct");
         }
@@ -51,7 +50,11 @@ class AuthController{
         }
 
         $token = JWTHelper::encodeAccessToken($user['id']);
-        return Response::message(null,$token);
+
+        return Response::message(
+            null,
+            $token
+        );
     }
 
     public function refreshToken()
@@ -65,24 +68,29 @@ class AuthController{
 
     public function forgotPasswordSendEmail()
     {
-        $user = UserRepository::findOneByEmailOrUsername($_POST['username']);
-        if($user == '')
+        $user = UserRepository::findOneByEmailOrUsername($_POST['email'], $_POST['email']);
+        if($user == null)
         {
             throw new ForbiddenException("The entered username or email is not correct We can not send confirmation email ");
         }
-        else
-        {
-            $email=$_POST['email'];
-            $verified_code=rand(10495,99564);
-            $expires_at=time()+(60*5);
-            $subject='Forgot password';
-            $body='<p>Your verified code is: </p>'.$verified_code;
 
-            EmailDispatcher::send($email, $subject, $body); //email sent
-            ForgotPasswordRepository::RecordForgotPassword($email,$verified_code,$expires_at );// forgot password record in database
-            return "AuthController ForgotPasswordSendEmail";
-        }
 
+        $email= $_POST['email'];
+        $verified_code= rand(100000,999999);
+        $expires_at= time()+ 60 * 5;
+        $subject='Forgot password';
+        $body='<p>Your verified code is: </p>'.$verified_code;
+
+
+        ForgotPasswordRepository::RecordForgotPassword($email,$verified_code,$expires_at );// forgot password record in database
+
+        EmailDispatcher::send([$email], $subject, $body);
+
+
+        return Response::message(
+            null,
+            null
+        );
     }
 
     public function forgotPasswordVerifyEmail()
@@ -98,7 +106,11 @@ class AuthController{
         }
 
         $forgotPassword['is_verified'] = true;
-        return "AuthController ForgotPasswordVerifyEmail";
+
+        return Response::message(
+            null,
+            null
+        );
     }
 
     public function forgotPasswordSetPassword()
