@@ -10,7 +10,7 @@ class ForgotPasswordMigration {
                 id int(10) NOT NULL auto_increment,
                 email varchar(250) NOT NULL,
                 code varchar(250) NOT NULL,     
-                expires_at datetime NOT NULL,     
+                expires_at int NOT NULL,     
                 is_verified bool NOT NULL DEFAULT FALSE,
                 PRIMARY KEY (id)
              );
