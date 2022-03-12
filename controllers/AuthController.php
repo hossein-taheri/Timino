@@ -78,11 +78,11 @@ class AuthController{
             $subject='Forgot password';
             $body='<p>Your verified code is: </p>'.$verified_code;
 
-             EmailDispatcher::send($email, $subject, $body); //email sent
-             ForgotPasswordRepository::RecordForgotPassword($email,$verified_code,$expires_at );// forgot password record in database
-
+            EmailDispatcher::send($email, $subject, $body); //email sent
+            ForgotPasswordRepository::RecordForgotPassword($email,$verified_code,$expires_at );// forgot password record in database
+            return "AuthController ForgotPasswordSendEmail";
         }
-        return "AuthController ForgotPasswordSendEmail";
+
     }
 
     public function forgotPasswordVerifyEmail()
@@ -98,8 +98,12 @@ class AuthController{
             throw new NotFoundException('The entered email or code is not correct');
         }
 
-        if( Date($forgotPassword['expires_at']) < Date(date("Y-m-d H:i:s")) ) {
+        if( $forgotPassword['expires_at'] < time() ) {
             throw new ForbiddenException('The code has been expired');
+        }
+
+        if( !$forgotPassword['is_verified'] ) {
+            throw new ForbiddenException('The code has not been verified');
         }
 
         UserRepository::updatePasswordByEmail($forgotPassword['email'],$_POST['password']);
