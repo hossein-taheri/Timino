@@ -22,7 +22,7 @@ class AuthController{
         $user = UserRepository::findOneByEmailOrUsername($_POST['email'],$_POST['username']);
         if($user == '')
         {
-            function create($username,$f_name,$l_name,$email,$password);
+            UserRepository::create($_POST['username'],$_POST['f_name'],$_POST['l_name'],$_POST['email'],$_POST['password']);
         }
         else
         {
@@ -65,6 +65,23 @@ class AuthController{
 
     public function forgotPasswordSendEmail()
     {
+        $user = UserRepository::findOneByEmailOrUsername($_POST['username']);
+        if($user == '')
+        {
+            throw new ForbiddenException("The entered username or email is not correct We can not send confirmation email ");
+        }
+        else
+        {
+            $email=$_POST['email'];
+            $verified_code=rand(10495,99564);
+            $expires_at=time()+(60*5);
+            $subject='Forgot password';
+            $body='<p>Your verified code is: </p>'.$verified_code;
+
+             EmailDispatcher::send($email, $subject, $body); //email sent
+             ForgotPasswordRepository::RecordForgotPassword($email,$verified_code,$expires_at );// forgot password record in database
+
+        }
         return "AuthController ForgotPasswordSendEmail";
     }
 
