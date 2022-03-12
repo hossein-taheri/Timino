@@ -19,6 +19,15 @@ use Repository\UserRepository;
 class AuthController{
     public function register()
     {
+        $user = UserRepository::findOneByEmailOrUsername($_POST['email'],$_POST['username']);
+        if($user == '')
+        {
+            function create($username,$f_name,$l_name,$email,$password);
+        }
+        else
+        {
+            throw new ForbiddenException("The entered username or email is exist");
+        }
         return "AuthController Register";
     }
 
