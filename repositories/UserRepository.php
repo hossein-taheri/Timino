@@ -30,8 +30,17 @@ class UserRepository {
         $statement->bindParam(":password", $password);
         $statement->execute();
     }
-    public static function create(){
-        //TODO :: write create user query
+    public static function create($username,$f_name,$l_name,$email,$password){
+        $pdo = $GLOBALS['pdo'];
+        $query = "INSERT INTO users(username,f_name,l_name,email,password) value (:username,:f_name,:l_name,:email,:password)";
+
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(':username',$username,PDO::PARAM_STR);
+        $statement->bindParam(':f_name',$f_name,PDO::PARAM_STR);
+        $statement->bindParam(':l_name',$l_name,PDO::PARAM_STR);
+        $statement->bindParam(':email',$email,PDO::PARAM_STR);
+        $statement->bindParam(':password',$password,PDO::PARAM_STR);
+        $statement->execute();
     }
     public static function update(){
         //TODO :: write update user query
