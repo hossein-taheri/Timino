@@ -87,6 +87,17 @@ class AuthController{
 
     public function forgotPasswordVerifyEmail()
     {
+        $forgotPassword = ForgotPasswordRepository::findOneByEmailAndCode($_POST['email'], $_POST['code']);
+
+        if ($forgotPassword == null) {
+            throw new NotFoundException('The entered email or code is not correct');
+        }
+
+        if( $forgotPassword['expires_at'] < time() ) {
+            throw new ForbiddenException('The code has been expired');
+        }
+
+        $forgotPassword['is_verified'] = true;
         return "AuthController ForgotPasswordVerifyEmail";
     }
 
