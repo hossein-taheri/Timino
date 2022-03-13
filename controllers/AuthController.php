@@ -25,7 +25,7 @@ class AuthController{
             throw new ForbiddenException("The entered username or email is exist");
         }
 
-        UserRepository::create($_POST['username'],$_POST['f_name'],$_POST['l_name'],$_POST['email'],$_POST['password']);
+        UserRepository::create($_POST['username'],$_POST['email'],$_POST['first_name'],$_POST['last_name'],$_POST['password']);
 
         return Response::message(
             null,
@@ -105,7 +105,8 @@ class AuthController{
             throw new ForbiddenException('The code has been expired');
         }
 
-        $forgotPassword['is_verified'] = true;
+        ForgotPasswordRepository::isVerified($_POST['email'], $_POST['code']);
+        //$forgotPassword['is_verified'] = true;
 
         return Response::message(
             null,
