@@ -1,10 +1,14 @@
 <?php
 
+require_once 'middlewares/validators/AuthMiddlewares.php';
+
+
+use Middleware\RegisterMiddleware;
 use Pecee\SimpleRouter\SimpleRouter;
 
 
 SimpleRouter::group(['prefix' => '/auth'], function() {
-    SimpleRouter::post('/register', 'AuthController@register')->setName('auth.register');
+    SimpleRouter::post('/register', 'AuthController@register', ['middleware' => [ RegisterMiddleware::class ]])->setName('auth.register');
 
     SimpleRouter::post('/verify-email', 'AuthController@verifyEmail')->setName('auth.verifyEmail');
 
