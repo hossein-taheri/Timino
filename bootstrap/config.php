@@ -14,4 +14,7 @@ $GLOBALS['config'] =  [
         'password' => $_ENV['EMAIL_PASSWORD'],
         'sender' => $_ENV['EMAIL_SENDER'],
     ],
+    'keys' => [
+        'JWT' => $_ENV['JWT_SECRET_KEY'],
+    ],
 ];

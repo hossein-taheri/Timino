@@ -60,11 +60,15 @@ class AuthController{
 
     public function refreshToken()
     {
-    }
+        $decoded = JWTHelper::decodeRefreshToken($_POST['access_token']);
 
-    public function forgotPassword()
-    {
-        return "AuthController RefreshToken";
+        return Response::message(
+            null,
+            [
+                'AccessToken' => JWTHelper::encodeAccessToken($decoded->user_id),
+                'RefreshToken' => JWTHelper::encodeRefreshToken($decoded->user_id)
+            ]
+        );
     }
 
     public function forgotPasswordSendEmail()
