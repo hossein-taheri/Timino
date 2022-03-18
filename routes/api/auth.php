@@ -3,6 +3,7 @@
 require_once 'middlewares/validators/AuthMiddlewares.php';
 
 use Middleware\LoginMiddleware;
+use Middleware\RefreshTokenMiddleware;
 use Middleware\RegisterMiddleware;
 use Middleware\ForgotPasswordSendEmailMiddleware;
 use Middleware\ForgotPasswordVerifyPasswordMiddleware;
@@ -17,7 +18,7 @@ SimpleRouter::group(['prefix' => '/auth'], function () {
 
     SimpleRouter::post('/login', 'AuthController@login', ['middleware' => [LoginMiddleware::class]])->setName('auth.login');
 
-    SimpleRouter::post('/refresh-token', 'AuthController@refreshToken')->setName('auth.refreshToken');
+    SimpleRouter::post('/refresh-token', 'AuthController@refreshToken', ['middleware' => [RefreshTokenMiddleware::class]])->setName('auth.refreshToken');
 
     SimpleRouter::post('/forgot-password/send-email', 'AuthController@forgotPasswordSendEmail', ['middleware' => [ForgotPasswordSendEmailMiddleware::class]])->setName('auth.forgotPasswordSendEmail');
 

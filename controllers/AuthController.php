@@ -60,13 +60,12 @@ class AuthController{
 
     public function refreshToken()
     {
-        $decoded = JWTHelper::decodeRefreshToken($_POST['access_token']);
+        $decoded = JWTHelper::decodeRefreshToken($_POST['refresh_token']);
 
         return Response::message(
             null,
             [
-                'AccessToken' => JWTHelper::encodeAccessToken($decoded->user_id),
-                'RefreshToken' => JWTHelper::encodeRefreshToken($decoded->user_id)
+                'AccessToken' => JWTHelper::encodeAccessToken($decoded->user_id)
             ]
         );
     }

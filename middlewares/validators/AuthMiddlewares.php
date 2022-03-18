@@ -32,6 +32,15 @@ class LoginMiddleware implements IMiddleware {
     }
 }
 
+class RefreshTokenMiddleware implements IMiddleware {
+    public function handle(Request $request): void
+    {
+        Validation::validate($_POST, [
+            'refresh_token'         => 'required',
+        ]);
+    }
+}
+
 class ForgotPasswordSendEmailMiddleware implements IMiddleware {
     public function handle(Request $request): void
     {
