@@ -4,21 +4,46 @@ use Firebase\JWT\Key;
 
 
 class JWTHelper {
-    public static function encodeAccessToken($id){
+    public static function encodeAccessToken($id): array
+    {
         $iat = time();
-        $nbf = $iat + ( 7 * 24 * 60 * 60 );
+        $nbf = $iat + ( 5 * 60 );
 
-        $key = "example_key";
+        $key = 'example_key';
+
         $payload = array(
-            "user_id" => $id,
-            "iat" => $iat,
-            "nbf" => $nbf
+            'user_id' => $id,
+            'type' => 'AccessToken',
+            'iat' => $iat,
+            'nbf' => $nbf
         );
 
         $jwt = JWT::encode($payload, $key, 'HS256');
 
         return [
-            'AccessToken' => $jwt,
+            'Token' => $jwt,
+            'ExpiresAt' => $nbf
+        ];
+    }
+
+    public static function encodeRefreshToken($id): array
+    {
+        $iat = time();
+        $nbf = $iat + ( 6 * 30 * 24 * 60 * 60 );
+
+        $key = 'example_key';
+
+        $payload = array(
+            'user_id' => $id,
+            'type' => 'RefreshToken',
+            'iat' => $iat,
+            'nbf' => $nbf
+        );
+
+        $jwt = JWT::encode($payload, $key, 'HS256');
+
+        return [
+            'Token' => $jwt,
             'ExpiresAt' => $nbf
         ];
     }

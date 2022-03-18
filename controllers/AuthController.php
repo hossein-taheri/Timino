@@ -49,11 +49,12 @@ class AuthController{
             throw new ForbiddenException("The entered username or password is not correct");
         }
 
-        $token = JWTHelper::encodeAccessToken($user['id']);
-
         return Response::message(
             null,
-            $token
+            [
+                'AccessToken' => JWTHelper::encodeAccessToken($user['id']),
+                'RefreshToken' => JWTHelper::encodeRefreshToken($user['id'])
+            ]
         );
     }
 
