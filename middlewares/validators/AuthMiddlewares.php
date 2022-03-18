@@ -1,30 +1,13 @@
 <?php
 namespace Middleware;
 
+require_once "helpers/Validation.php";
 
-use Helpers\Response;
+use Helpers\Validation;
 use Pecee\Http\Middleware\IMiddleware;
 use Pecee\Http\Request;
-use Rakit\Validation\Validator;
 
 
-class Validation
-{
-    public static function validate($inputs, $roles)
-    {
-        $validator = new Validator;
-
-        $validation = $validator->make($inputs, $roles);
-
-        $validation->validate();
-
-        if ($validation->fails()) {
-            $errors = $validation->errors();
-            echo Response::validationError($errors->all());
-            exit();
-        }
-    }
-}
 
 class RegisterMiddleware implements IMiddleware {
     public function handle(Request $request): void
