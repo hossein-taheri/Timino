@@ -1,7 +1,9 @@
 <?php
 
 require_once 'middlewares/validators/AuthMiddlewares.php';
+require_once 'middlewares/JWTAuthMiddleware.php';
 
+use Middleware\JWTAuthMiddleware;
 use Middleware\LoginMiddleware;
 use Middleware\RefreshTokenMiddleware;
 use Middleware\RegisterMiddleware;
@@ -25,4 +27,9 @@ SimpleRouter::group(['prefix' => '/auth'], function () {
     SimpleRouter::post('/forgot-password/verify-password', 'AuthController@forgotPasswordVerifyEmail', ['middleware' => [ForgotPasswordVerifyPasswordMiddleware::class]])->setName('auth.forgotPasswordVerifyEmail');
 
     SimpleRouter::post('/forgot-password/set-password', 'AuthController@forgotPasswordSetPassword', ['middleware' => [ForgotPasswordSetPasswordMiddleware::class]])->setName('auth.forgotPasswordSetPassword');
+
+    SimpleRouter::post('/test-auth-middleware', function () {
+        echo $_POST['user_id'];
+        
+    }, ['middleware' => [JWTAuthMiddleware::class]]);
 });
