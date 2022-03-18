@@ -16,6 +16,10 @@ class Response{
         return Response::response($statusCode, [ $message ],null);
     }
 
+    public static function validationError($messages){
+        return Response::response(400, $messages , null);
+    }
+
     public static function message($message,$data){
         return Response::response(200, [ $message ],$data);
     }
