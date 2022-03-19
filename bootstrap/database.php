@@ -2,8 +2,10 @@
 
 require "migrations/UserMigration.php";
 require "migrations/ForgotPasswordMigration.php";
+require "migrations/TimeLineMigration.php";
 use Migration\UserMigration;
 use Migration\ForgotPasswordMigration;
+use Migration\TimeLineMigration;
 
 try {
     $db = $GLOBALS['config']['database'];
@@ -22,3 +24,5 @@ try {
 
 UserMigration::create();
 ForgotPasswordMigration::create();
+TimeLineMigration::create();
+
