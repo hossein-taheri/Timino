@@ -150,7 +150,7 @@ class AuthController{
         );
     }
     
-    public function searchTimelineName{
+    public function searchTimelineName(){
         $timelina_name = TimeLineRepository::findAllByName($_POST['name']);
         if($timelina_name == null){
             throw new ForbiddenException("This record not found.");
