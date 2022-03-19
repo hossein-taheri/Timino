@@ -45,7 +45,13 @@ class UserRepository {
     public static function update(){
         //TODO :: write update user query
     }
-    public static function delete(){
-        //TODO :: write delete user query
+    public static function deleteById($id)
+    {
+        $pdo = $GLOBALS['pdo'];
+        $query = "DELETE FROM users WHERE id = :id";
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(":id", $id);
+        $statement->execute();
+        return $statement->fetchAll()[0];
     }
 }

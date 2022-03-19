@@ -20,6 +20,11 @@ class AuthController{
     {
         $user = UserRepository::findOneByEmailOrUsername($_POST['email'],$_POST['username']);
 
+        if ($user['is_confirmed'] == false){
+            UserRepository::deleteById($user['id']);
+            $user = null;
+        }
+
         if($user != null)
         {
             throw new ForbiddenException("The entered username or email is exist");
