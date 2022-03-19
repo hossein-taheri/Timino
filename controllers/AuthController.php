@@ -5,6 +5,7 @@ require_once "helpers/EmailDispatcher.php";
 require_once "helpers/Exceptions.php";
 require_once "repositories/UserRepository.php";
 require_once "repositories/ForgotPasswordRepository.php";
+require_once "repositories/TimeLineRepository.php";
 require_once "helpers/JWT.php";
 
 use ForbiddenException;
@@ -151,13 +152,13 @@ class AuthController{
     }
     
     public function searchTimelineName(){
-        $timelina_name = TimeLineRepository::findAllByName($_POST['name']);
-        if($timelina_name == null){
+        $timeline_name = TimeLineRepository::findAllByName($_POST['name']);
+        if($timeline_name == null){
             throw new ForbiddenException("This record not found.");
         }
         return Response::message(
             'These records were found',
-            $timelina_name
+            $timeline_name
         );
     }
 }
