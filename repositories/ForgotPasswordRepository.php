@@ -34,5 +34,5 @@ class ForgotPasswordRepository {
         $statement->bindParam(':code',$code);
         $statement->execute();
         return $statement->fetchAll();
-}
+    }
 }

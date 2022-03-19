@@ -2,8 +2,10 @@
 
 require "migrations/UserMigration.php";
 require "migrations/ForgotPasswordMigration.php";
+require "migrations/VerifyEmailMigration.php";
 use Migration\UserMigration;
 use Migration\ForgotPasswordMigration;
+use Migration\VerifyEmailMigration;
 
 try {
     $db = $GLOBALS['config']['database'];
@@ -22,3 +24,4 @@ try {
 
 UserMigration::create();
 ForgotPasswordMigration::create();
+VerifyEmailMigration::create();

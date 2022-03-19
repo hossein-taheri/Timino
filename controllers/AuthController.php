@@ -3,17 +3,21 @@ namespace Controllers;
 
 require_once "helpers/EmailDispatcher.php";
 require_once "helpers/Exceptions.php";
+require_once "helpers/JWT.php";
+require_once "helpers/RandomGenerator.php";
 require_once "repositories/UserRepository.php";
 require_once "repositories/ForgotPasswordRepository.php";
-require_once "helpers/JWT.php";
+require_once "repositories/VerifyEmailRepository.php";
 
 use ForbiddenException;
+use Helpers\RandomGenerator;
 use NotFoundException;
 use Helpers\EmailDispatcher;
 use Helpers\Response;
 use JWTHelper;
 use Repository\ForgotPasswordRepository;
 use Repository\UserRepository;
+use Repository\VerifyEmailRepository;
 
 class AuthController{
     public function register()
@@ -32,14 +36,41 @@ class AuthController{
 
         UserRepository::create($_POST['username'],$_POST['email'],$_POST['first_name'],$_POST['last_name'],$_POST['password']);
 
+        $user = UserRepository::findOneByEmailOrUsername($_POST['email'],$_POST['username']);
+
+        $token = RandomGenerator::generateRandomString(32);
+
+        VerifyEmailRepository::create($user['email'],$token);
+
+        $name = $user['first_name'];
+        EmailDispatcher::send(
+            [
+                $user['email'],
+            ],
+            'VerifyEmail',
+            "
+                <h3>Dear $name </h3>
+                <h3> Welcome to Timino </h3>
+                <h4>Press the below button to Verify email</h4>
+                <form method='post' action='http://127.0.0.1:3000/api/auth/verify-email'>
+                    <input type='hidden' name='token' value='$token'>
+                    <button type='submit'>
+                        Submit
+                    </button>
+                </form>
+            "
+        );
+
+
         return Response::message(
             null,
-            null
+            $user
         );
     }
 
     public function verifyEmail()
     {
+        echo json_encode($_POST['token']);
         return "AuthController VerifyEmail";
     }
 

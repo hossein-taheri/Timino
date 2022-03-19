@@ -52,6 +52,6 @@ class UserRepository {
         $statement = $pdo->prepare($query);
         $statement->bindParam(":id", $id);
         $statement->execute();
-        return $statement->fetchAll()[0];
+        return $statement->fetchAll();
     }
 }
