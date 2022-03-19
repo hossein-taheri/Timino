@@ -96,6 +96,10 @@ class AuthController{
             throw new ForbiddenException("The entered username or password is not correct");
         }
 
+        if ( $user['is_confirmed'] == 0 ){
+            throw new ForbiddenException("Your account has not been confirmed");
+        }
+
         return Response::message(
             null,
             [
