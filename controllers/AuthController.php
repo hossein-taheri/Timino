@@ -13,6 +13,7 @@ use Helpers\EmailDispatcher;
 use Helpers\Response;
 use JWTHelper;
 use Repository\ForgotPasswordRepository;
+use Repository\TimeLineRepository;
 use Repository\UserRepository;
 
 class AuthController{
@@ -150,7 +151,7 @@ class AuthController{
     }
     
     public function searchTimelineName{
-        $timelina_name = TimelineRepository::findAllByName($_POST['name']);
+        $timelina_name = TimeLineRepository::findAllByName($_POST['name']);
         if($timelina_name == null){
             throw new ForbiddenException("This record not found.");
         }
