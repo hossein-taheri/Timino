@@ -54,4 +54,14 @@ class UserRepository {
         $statement->execute();
         return $statement->fetchAll();
     }
+
+    public static function verifyUserByEmail($email)
+    {
+        $pdo = $GLOBALS['pdo'];
+        $query = "UPDATE users SET is_confirmed = 1 WHERE email = :email";
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
 }

@@ -10,13 +10,14 @@ use Middleware\RegisterMiddleware;
 use Middleware\ForgotPasswordSendEmailMiddleware;
 use Middleware\ForgotPasswordVerifyPasswordMiddleware;
 use Middleware\ForgotPasswordSetPasswordMiddleware;
+use Middleware\VerifyLoginMiddleware;
 use Pecee\SimpleRouter\SimpleRouter;
 
 
 SimpleRouter::group(['prefix' => '/auth'], function () {
     SimpleRouter::post('/register', 'AuthController@register', ['middleware' => [RegisterMiddleware::class]])->setName('auth.register');
 
-    SimpleRouter::post('/verify-email', 'AuthController@verifyEmail')->setName('auth.verifyEmail');
+    SimpleRouter::post('/verify-email', 'AuthController@verifyEmail', ['middleware' => [VerifyLoginMiddleware::class]])->setName('auth.verifyEmail');
 
     SimpleRouter::post('/login', 'AuthController@login', ['middleware' => [LoginMiddleware::class]])->setName('auth.login');
 
@@ -30,6 +31,6 @@ SimpleRouter::group(['prefix' => '/auth'], function () {
 
     SimpleRouter::post('/test-auth-middleware', function () {
         echo $_POST['user_id'];
-        
+
     }, ['middleware' => [JWTAuthMiddleware::class]]);
 });

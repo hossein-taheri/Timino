@@ -22,6 +22,16 @@ class RegisterMiddleware implements IMiddleware {
     }
 }
 
+class VerifyLoginMiddleware implements IMiddleware {
+    public function handle(Request $request): void
+    {
+        Validation::validate($_POST, [
+            'email'                 => 'required|email',
+            'token'                 => 'required|min:25|max:45',
+        ]);
+    }
+}
+
 class LoginMiddleware implements IMiddleware {
     public function handle(Request $request): void
     {

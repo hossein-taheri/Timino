@@ -40,19 +40,20 @@ class AuthController{
 
         $token = RandomGenerator::generateRandomString(32);
 
+
         VerifyEmailRepository::create($user['email'],$token);
 
-        $name = $user['first_name'];
         EmailDispatcher::send(
             [
                 $user['email'],
             ],
             'VerifyEmail',
             "
-                <h3>Dear $name </h3>
+                <h3>Dear $user[first_name] </h3>
                 <h3> Welcome to Timino </h3>
                 <h4>Press the below button to Verify email</h4>
                 <form method='post' action='http://127.0.0.1:3000/api/auth/verify-email'>
+                    <input type='hidden' name='email' value='$user[email]'>
                     <input type='hidden' name='token' value='$token'>
                     <button type='submit'>
                         Submit
@@ -70,8 +71,18 @@ class AuthController{
 
     public function verifyEmail()
     {
-        echo json_encode($_POST['token']);
-        return "AuthController VerifyEmail";
+        $loginVerify = VerifyEmailRepository::findOneByEmailAndToken($_POST['email'],$_POST['token']);
+
+        if ($loginVerify == null){
+            throw new NotFoundException("The entered email or token is not correct");
+        }
+
+        UserRepository::verifyUserByEmail($_POST['email']);
+
+        Response::message(
+            'The user verified successfully',
+            null
+        );
     }
 
     public function login()
