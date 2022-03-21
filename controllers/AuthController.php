@@ -8,6 +8,7 @@ require_once "helpers/RandomGenerator.php";
 require_once "repositories/UserRepository.php";
 require_once "repositories/ForgotPasswordRepository.php";
 require_once "repositories/VerifyEmailRepository.php";
+require_once "repositories/TimeLineRepository.php";
 
 use ForbiddenException;
 use Helpers\RandomGenerator;
@@ -16,6 +17,7 @@ use Helpers\EmailDispatcher;
 use Helpers\Response;
 use JWTHelper;
 use Repository\ForgotPasswordRepository;
+use Repository\TimeLineRepository;
 use Repository\UserRepository;
 use Repository\VerifyEmailRepository;
 
@@ -189,4 +191,27 @@ class AuthController{
             null
         );
     }
+
+    public function searchUsername(){
+        $usernames = UserRepository::findAllByUsername($_POST['username']);
+        if($usernames == null){
+            throw new ForbiddenException("This record not found.");
+        }
+        return Response::message(
+            'These records were found',
+            $usernames
+        );
+    }
+    
+    public function searchTimelineName(){
+        $timeline_name = TimeLineRepository::findAllByName($_POST['name']);
+        if($timeline_name == null){
+            throw new ForbiddenException("This record not found.");
+        }
+        return Response::message(
+            'These records were found',
+            $timeline_name
+        );
+    }
 }
+

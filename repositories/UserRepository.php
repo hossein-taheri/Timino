@@ -64,4 +64,16 @@ class UserRepository {
         $statement->execute();
         return $statement->fetchAll();
     }
+
+    public static function findAllByUsername($username){
+        $username = "%$username%";
+        $pdo = $GLOBALS['pdo'];
+        $query = "SELECT username,first_name,last_name,email FROM users WHERE username LIKE :username LIMIT 5";
+
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(':username',$username);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
 }
+
