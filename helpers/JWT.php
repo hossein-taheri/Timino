@@ -73,7 +73,7 @@ class JWTHelper {
         $decoded = JWT::decode($token, new Key($key, 'HS256'));
 
         if ( $decoded->type != 'RefreshToken' ){
-            throw new ForbiddenException("Token is not an access token");
+            throw new ForbiddenException("Token is not a refresh token");
         }
 
         if ($decoded->nbf < time()) {

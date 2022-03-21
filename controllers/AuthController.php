@@ -64,8 +64,8 @@ class AuthController{
 
 
         return Response::message(
-            null,
-            $user
+            'Your account created successfully, Check your email to verify it',
+            null
         );
     }
 
