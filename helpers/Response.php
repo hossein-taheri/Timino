@@ -3,6 +3,9 @@ namespace Helpers;
 
 class Response{
     private static function response($statusCode,$messages,$data){
+        error_reporting(0);
+        ini_set('display_errors', 0);
+
         http_response_code($statusCode);
         header('Content-Type: application/json; charset=utf-8');
         return json_encode([

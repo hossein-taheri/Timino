@@ -52,7 +52,7 @@ class AuthController{
                 <h3>Dear $user[first_name] </h3>
                 <h3> Welcome to Timino </h3>
                 <h4>Press the below button to Verify email</h4>
-                <form method='post' action='http://$_SERVER[HTTP_HOST]/api/auth/verify-email'>
+                <form method='get' action='http://$_SERVER[HTTP_HOST]/api/auth/verify-email'>
                     <input type='hidden' name='email' value='$user[email]'>
                     <input type='hidden' name='token' value='$token'>
                     <button type='submit'>
@@ -71,18 +71,15 @@ class AuthController{
 
     public function verifyEmail()
     {
-        $loginVerify = VerifyEmailRepository::findOneByEmailAndToken($_POST['email'],$_POST['token']);
+        $loginVerify = VerifyEmailRepository::findOneByEmailAndToken($_GET['email'],$_GET['token']);
 
         if ($loginVerify == null){
             throw new NotFoundException("The entered email or token is not correct");
         }
 
-        UserRepository::verifyUserByEmail($_POST['email']);
+        UserRepository::verifyUserByEmail($_GET['email']);
 
-        Response::message(
-            'The user has been verified successfully',
-            null
-        );
+        echo "Thank You. Your account has been verified successfully";
     }
 
     public function login()

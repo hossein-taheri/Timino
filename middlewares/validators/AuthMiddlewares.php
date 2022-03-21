@@ -25,7 +25,7 @@ class RegisterMiddleware implements IMiddleware {
 class VerifyLoginMiddleware implements IMiddleware {
     public function handle(Request $request): void
     {
-        Validation::validate($_POST, [
+        Validation::validate($_GET, [
             'email'                 => 'required|email',
             'token'                 => 'required|min:25|max:45',
         ]);
