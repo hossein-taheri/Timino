@@ -6,8 +6,12 @@ require "migrations/VerifyEmailMigration.php";
 require "migrations/TimeLineMigration.php";
 require "migrations/TimelineMemberMigration.php";
 require "migrations/ChatMessageMigration.php";
+require "migrations/EventMigration.php";
+require "migrations/LikeMigration.php";
 
 use Migration\ChatMessageMigration;
+use Migration\EventMigration;
+use Migration\LikeMigration;
 use Migration\TimelineMemberMigration;
 use Migration\UserMigration;
 use Migration\ForgotPasswordMigration;
@@ -35,3 +39,5 @@ VerifyEmailMigration::create();
 TimeLineMigration::create();
 TimelineMemberMigration::create();
 ChatMessageMigration::create();
+EventMigration::create();
+LikeMigration::create();
