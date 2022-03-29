@@ -8,7 +8,7 @@ class TimelineMemberMigration
     {
         $pdo = $GLOBALS['pdo'];
         $pdo->query("
-            CREATE TABLE IF NOT EXISTS `timeline`(
+            CREATE TABLE IF NOT EXISTS `timeline_members`(
                 `timeline_id` int(10) NOT NULL,
                 `user_id` int(10) NOT NULL,
                 `event_privilege_level` ENUM('read_only','create_event') NOT NULL DEFAULT 'read_only',
