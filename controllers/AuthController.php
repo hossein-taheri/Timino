@@ -3,7 +3,7 @@ namespace Controllers;
 
 require_once "helpers/EmailDispatcher.php";
 require_once "helpers/Exceptions.php";
-require_once "helpers/JWT.php";
+require_once "helpers/JWTHelper.php";
 require_once "helpers/RandomGenerator.php";
 require_once "repositories/UserRepository.php";
 require_once "repositories/ForgotPasswordRepository.php";
@@ -115,7 +115,7 @@ class AuthController{
         return Response::message(
             null,
             [
-                'AccessToken' => JWTHelper::encodeAccessToken($decoded->user_id)
+                'AccessToken' => JWTHelper::encodeAccessToken($decoded['user_id'])
             ]
         );
     }
@@ -202,7 +202,7 @@ class AuthController{
             $usernames
         );
     }
-    
+
     public function searchTimelineName(){
         $timeline_name = TimeLineRepository::findAllByName($_POST['name']);
         if($timeline_name == null){

@@ -1,13 +1,14 @@
 <?php
 namespace Controllers;
+use Helpers\Response;
 use Pecee\Controllers\IResourceController;
+use Repository\TimeLineRepository;
 
 class TimelineController implements IResourceController{
 
     public function index()
     {
         echo "Index";
-        // TODO: Implement index() method.
     }
 
     public function show($id)
@@ -18,8 +19,9 @@ class TimelineController implements IResourceController{
 
     public function store()
     {
-        echo "Store";
-        // TODO: Implement store() method.
+        $timeline = TimeLineRepository::create($_POST['user_id'],$_POST['title'],$_POST['description'],$_POST['avatar'],$_POST['privilege_level']);
+
+        return Response::message('Timeline created successfully',null);
     }
 
     public function create()

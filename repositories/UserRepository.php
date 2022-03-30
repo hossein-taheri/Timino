@@ -1,6 +1,8 @@
 <?php
 namespace Repository;
 
+use Helpers\PDOHelper;
+
 class UserRepository {
     public static function findAll(){
         //TODO :: write findAll user query ( by conditions )
@@ -19,7 +21,7 @@ class UserRepository {
         $statement = $pdo->prepare($query);
         $statement->bindParam(":email", $email);
         $statement->bindParam(":username", $username);
-        $statement->execute();
+        PDOHelper::execute($statement);
         return $statement->fetchAll()[0];
     }
     public static function updatePasswordByEmail($email, $password){

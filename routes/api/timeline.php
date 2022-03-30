@@ -1,16 +1,19 @@
 <?php
 
+require_once 'middlewares/validators/TimelineMiddlewares.php';
 
+use Middleware\CreateTimelineMiddleware;
+use Middleware\JWTAuthMiddleware;
 use Pecee\SimpleRouter\SimpleRouter;
 
 
-SimpleRouter::group(['prefix' => '/timeline'], function () {
+SimpleRouter::group(['middleware'=>[JWTAuthMiddleware::class],'prefix' => '/timeline'], function () {
 
     SimpleRouter::get('/search', 'TimelineController@search')->setName('timeline.search');
 
     SimpleRouter::get('/index', 'TimelineController@index')->setName('timeline.index');
 
-    SimpleRouter::post('/create', 'TimelineController@create')->setName('timeline.create');
+    SimpleRouter::post('/create', 'TimelineController@store', ['middleware' => [CreateTimelineMiddleware::class]])->setName('timeline.create');
 
     SimpleRouter::get('/show/{id}', 'TimelineController@show')->setName('timeline.show');
 

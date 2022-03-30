@@ -1,6 +1,8 @@
 <?php
 namespace Repository;
 
+use Helpers\PDOHelper;
+
 class VerifyEmailRepository
 {
     public static function findOneByEmailAndToken($email, $token)
@@ -21,6 +23,6 @@ class VerifyEmailRepository
         $statement = $pdo->prepare($query);
         $statement->bindParam(':email',$email);
         $statement->bindParam(':token',$token);
-        $statement->execute();
+        PDOHelper::execute($statement);
     }
 }

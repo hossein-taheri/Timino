@@ -1,7 +1,6 @@
 <?php
 
 require_once 'middlewares/validators/AuthMiddlewares.php';
-require_once 'middlewares/JWTAuthMiddleware.php';
 
 use Middleware\JWTAuthMiddleware;
 use Middleware\LoginMiddleware;

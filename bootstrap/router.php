@@ -3,7 +3,12 @@
 use Helpers\Response;
 use Pecee\SimpleRouter\SimpleRouter;
 use Pecee\Http\Request;
+
 require_once "helpers/Response.php";
+require_once 'helpers/PDOHelper.php';
+
+require_once 'middlewares/JWTAuthMiddleware.php';
+
 require_once "controllers/AuthController.php";
 require_once "controllers/UserController.php";
 require_once "controllers/TimelineController.php";
