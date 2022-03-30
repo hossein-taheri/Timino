@@ -5,6 +5,8 @@ use Pecee\SimpleRouter\SimpleRouter;
 use Pecee\Http\Request;
 require_once "helpers/Response.php";
 require_once "controllers/AuthController.php";
+require_once "controllers/UserController.php";
+require_once "controllers/TimelineController.php";
 
 SimpleRouter::setDefaultNamespace('Controllers');
 
