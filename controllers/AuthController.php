@@ -189,17 +189,5 @@ class AuthController{
             null
         );
     }
-
-    public function searchUsername(){
-        $usernames = UserRepository::findAllByUsername($_POST['username']);
-        if($usernames == null){
-            throw new ForbiddenException("This record not found.");
-        }
-        return Response::message(
-            'These records were found',
-            $usernames
-        );
-    }
-
 }
 

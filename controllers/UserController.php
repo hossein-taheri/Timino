@@ -1,8 +1,30 @@
 <?php
 namespace Controllers;
-use Pecee\Controllers\IResourceController;
 
-class UserController implements IResourceController{
+require_once "helpers/Exceptions.php";
+require_once "helpers/RandomGenerator.php";
+require_once "repositories/UserRepository.php";
+
+
+use ForbiddenException;
+use NotFoundException;
+use Helpers\Response;
+//use Pecee\Controllers\IResourceController;
+use Repository\UserRepository;
+
+class UserController
+{
+    public function search()
+    {
+        $usernames = UserRepository::findAllByUsername($_GET['username']);
+        if($usernames == null){
+            throw new NotFoundException("This record not found.");
+        }
+        return Response::message(
+            'These records were found',
+            $usernames
+        );
+    }
 
     public function index()
     {

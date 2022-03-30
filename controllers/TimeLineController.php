@@ -1,5 +1,6 @@
 <?php
 namespace Controllers;
+
 require_once "repositories/TimeLineRepository.php";
 require_once "helpers/Exceptions.php";
 
@@ -8,11 +9,11 @@ use NotFoundException;
 use Helpers\Response;
 use Repository\TimeLineRepository;
 
-class Timeline
+class TimeLineController
 {
     public function search()
     {
-        $timeline_name = TimeLineRepository::findAllByName($_GET['name']);
+        $timeline_name = TimeLineRepository::findAllByName($_GET['title']);
         if ($timeline_name == null) {
             throw new NotFoundException("This record not found.");
         }

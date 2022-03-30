@@ -3,13 +3,13 @@ namespace Repository;
 
 class TimeLineRepository {
 
-    public static function findAllByName($name){
-        $name = "%$name%";
+    public static function findAllByName($title){
+        $title = "$title%";
         $pdo = $GLOBALS['pdo'];
-        $query = "SELECT name,username,creat_time FROM timeline WHERE name LIKE :name LIMIT 5";
+        $query = "SELECT title,description,created_at,avatar FROM timelines WHERE title LIKE :title LIMIT 5";
 
         $statement = $pdo->prepare($query);
-        $statement->bindParam(':name',$name);
+        $statement->bindParam(':title',$title);
         $statement->execute();
         return $statement->fetchAll();
     }

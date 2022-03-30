@@ -7,7 +7,7 @@ class UserRepository {
     }
     public static function findOneById($id){
         $pdo = $GLOBALS['pdo'];
-        $query = "SELECT * FROM users WHERE id = :id";
+        $query = "SELECT username,first_name,last_name,email,avatar,role FROM users WHERE id = :id AND is_confirmed = 1";
         $statement = $pdo->prepare($query);
         $statement->bindParam(":id", $id);
         $statement->execute();
@@ -66,9 +66,9 @@ class UserRepository {
     }
 
     public static function findAllByUsername($username){
-        $username = "%$username%";
+        $username = "$username%";
         $pdo = $GLOBALS['pdo'];
-        $query = "SELECT username,first_name,last_name,email FROM users WHERE username LIKE :username LIMIT 5";
+        $query = "SELECT id,username,first_name,last_name FROM users WHERE username LIKE :username AND is_confirmed = 1 LIMIT 5";
 
         $statement = $pdo->prepare($query);
         $statement->bindParam(':username',$username);
