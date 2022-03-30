@@ -33,7 +33,14 @@ class UserController
 
     public function show($id)
     {
-        // TODO: Implement show() method.
+        $username = UserRepository::findOneById($_GET['id']);
+        if($username == null){
+            throw new NotFoundException("This record not found.");
+        }
+        return Response::message(
+            'These record were found',
+            $username
+        );
     }
 
     public function store()
