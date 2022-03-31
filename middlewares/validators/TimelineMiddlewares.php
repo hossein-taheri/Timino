@@ -8,6 +8,15 @@ use Pecee\Http\Middleware\IMiddleware;
 use Pecee\Http\Request;
 
 
+class IndexTimelineMiddleware implements IMiddleware {
+    public function handle(Request $request): void
+    {
+        Validation::validate($_GET, [
+            'page'                  => 'numeric|integer|default:1|min:1',
+        ]);
+    }
+}
+
 class CreateTimelineMiddleware implements IMiddleware {
     public function handle(Request $request): void
     {

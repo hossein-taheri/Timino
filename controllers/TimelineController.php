@@ -12,7 +12,18 @@ class TimelineController implements IResourceController
 
     public function index()
     {
-        echo "Index";
+        $per_page = 10;
+
+        $timelines = TimeLineRepository::findUserTimelines($_POST['user_id'], $per_page, $_GET['page']);
+
+        $pages_count = TimeLineRepository::countPagesUserTimelines($_POST['user_id'],$per_page);
+
+        return Response::message(null, [
+            'timelines' => $timelines,
+            'pages_count' => $pages_count ,
+            'per_page' => $per_page,
+            'page' => $_GET['page'],
+        ]);
     }
 
     public function show($id)
@@ -41,7 +52,7 @@ class TimelineController implements IResourceController
 
     public function edit($id)
     {
-        echo "Edit".$id;
+        echo "Edit" . $id;
     }
 
     public function update($id)
@@ -65,7 +76,7 @@ class TimelineController implements IResourceController
         );
 
 
-        return Response::message('Timeline has been updated successfully',null);
+        return Response::message('Timeline has been updated successfully', null);
     }
 
     public function destroy($id)

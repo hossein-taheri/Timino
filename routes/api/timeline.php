@@ -3,6 +3,7 @@
 require_once 'middlewares/validators/TimelineMiddlewares.php';
 
 use Middleware\CreateTimelineMiddleware;
+use Middleware\IndexTimelineMiddleware;
 use Middleware\JWTAuthMiddleware;
 use Middleware\UpdateTimelineMiddleware;
 use Pecee\SimpleRouter\SimpleRouter;
@@ -12,7 +13,7 @@ SimpleRouter::group(['middleware'=>[JWTAuthMiddleware::class],'prefix' => '/time
 
     SimpleRouter::get('/search', 'TimelineController@search')->setName('timeline.search');
 
-    SimpleRouter::get('/index', 'TimelineController@index')->setName('timeline.index');
+    SimpleRouter::get('/index', 'TimelineController@index', ['middleware' => [IndexTimelineMiddleware::class]])->setName('timeline.index');
 
     SimpleRouter::post('/create', 'TimelineController@store', ['middleware' => [CreateTimelineMiddleware::class]])->setName('timeline.create');
 
