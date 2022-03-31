@@ -27,4 +27,28 @@ class TimeLineRepository {
         $statement->execute();
         return $statement->fetchAll();
     }
+
+    public static function findOneById($id)
+    {
+        $pdo = $GLOBALS['pdo'];
+        $query = "SELECT * FROM `timelines` WHERE `id` = :id;";
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(':id',$id);
+        PDOHelper::execute($statement);
+        return $statement->fetchAll()[0];
+    }
+
+    public static function updateOneById($id,$title,$description,$avatar,$privilege_level)
+    {
+        $pdo = $GLOBALS['pdo'];
+        $query = "UPDATE `timelines` SET `title`=:title,`description`=:description,`avatar`=:avatar,`privilege_level`=:privilege_level WHERE id = :id";
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(':id',$id);
+        $statement->bindParam(':title',$title);
+        $statement->bindParam(':description',$description);
+        $statement->bindParam(':avatar',$avatar);
+        $statement->bindParam(':privilege_level',$privilege_level);
+        PDOHelper::execute($statement);
+        return $statement->fetchAll();
+    }
 }

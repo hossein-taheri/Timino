@@ -13,7 +13,19 @@ class CreateTimelineMiddleware implements IMiddleware {
     {
         Validation::validate($_POST, [
             'title'                 => 'required|min:5|max:50',
-            'description'           => 'min:25|max:45',
+            'description'           => 'min:10|max:45',
+            'avatar'                => 'min:5|max:25',
+            'privilege_level'       => 'required|in:private,public',
+        ]);
+    }
+}
+
+class UpdateTimelineMiddleware implements IMiddleware {
+    public function handle(Request $request): void
+    {
+        Validation::validate($_POST, [
+            'title'                 => 'required|min:5|max:50',
+            'description'           => 'min:10|max:45',
             'avatar'                => 'min:5|max:25',
             'privilege_level'       => 'required|in:private,public',
         ]);
