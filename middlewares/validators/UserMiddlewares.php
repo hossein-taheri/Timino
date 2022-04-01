@@ -9,7 +9,7 @@ use Pecee\Http\Request;
 
 
 
-class IndexUserMiddleware implements IMiddleware {
+class searchMiddleware implements IMiddleware {
     public function handle(Request $request): void
     {
         Validation::validate($_GET, [

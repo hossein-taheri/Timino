@@ -3,16 +3,16 @@ require_once 'middlewares/validators/AuthMiddlewares.php';
 require_once 'middlewares/JWTAuthMiddleware.php';
 
 use Pecee\SimpleRouter\SimpleRouter;
-use Middleware\IndexUserMiddleware;
+use Middleware\searchMiddleware;
 
 
 SimpleRouter::group(['prefix' => '/user'], function () {
 
-    SimpleRouter::get('/search', 'UserController@search')->setName('user.search');
+    SimpleRouter::get('/search_suggestion', 'UserController@search_suggestion')->setName('user.search_suggestion');
 
     SimpleRouter::get('/show/{id}', 'UserController@show')->setName('user.show');
 
-    SimpleRouter::get('/index', 'UserController@index', ['middleware' => [IndexUserMiddleware::class]])->setName('User.index');
+    SimpleRouter::get('/search', 'UserController@search', ['middleware' => [searchMiddleware::class]])->setName('User.search');
 
 
 });

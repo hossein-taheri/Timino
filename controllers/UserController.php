@@ -12,9 +12,10 @@ use Helpers\Response;
 //use Pecee\Controllers\IResourceController;
 use Repository\UserRepository;
 
+
 class UserController
 {
-    public function search()
+    public function search_suggestion()
     {
         $usernames = UserRepository::findAllByUsername($_GET['username']);
         if($usernames == null){
@@ -26,7 +27,7 @@ class UserController
         );
     }
 
-    public function index()
+    public function search()
     {
         $per_page = 10;
 
