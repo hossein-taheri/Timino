@@ -28,7 +28,18 @@ class UserController
 
     public function index()
     {
-        // TODO: Implement index() method.
+        $per_page = 10;
+
+        $users = UserRepository::findUsers($_POST['user_id'], $per_page, $_GET['page']);
+
+        $pages_count = UserRepository::countPagesUsers($_POST['user_id'],$per_page);
+
+        return Response::message(null, [
+            'users' => $users,
+            'pages_count' => $pages_count ,
+            'per_page' => $per_page,
+            'page' => $_GET['page'],
+        ]);
     }
 
     public function show($id)
