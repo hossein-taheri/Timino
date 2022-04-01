@@ -1,7 +1,9 @@
 <?php
-
+require_once 'middlewares/validators/AuthMiddlewares.php';
+require_once 'middlewares/JWTAuthMiddleware.php';
 
 use Pecee\SimpleRouter\SimpleRouter;
+use Middleware\IndexUserMiddleware;
 
 
 SimpleRouter::group(['prefix' => '/user'], function () {
