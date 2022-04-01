@@ -38,7 +38,7 @@ class UserController
             throw new NotFoundException("This record not found.");
         }
         return Response::message(
-            'These record were found',
+            'This record were found',
             $username
         );
     }

@@ -68,7 +68,7 @@ class UserRepository {
     public static function findAllByUsername($username){
         $username = "$username%";
         $pdo = $GLOBALS['pdo'];
-        $query = "SELECT id,username,first_name,last_name FROM users WHERE username LIKE :username AND is_confirmed = 1 LIMIT 5";
+        $query = "SELECT id,username,first_name,last_name,avatar,role FROM users WHERE username LIKE :username AND is_confirmed = 1 LIMIT 5";
 
         $statement = $pdo->prepare($query);
         $statement->bindParam(':username',$username);
