@@ -6,16 +6,17 @@ use Helpers\PDOHelper;
 
 class TimeLineMemberRepository
 {
-    public static function findOneByTimelineIdAndUserId($timeline_id, $user_id)
+    public static function findOneByTimelineIdAndEmail($timeline_id, $user_id)
     {
         $pdo = $GLOBALS['pdo'];
         $query = "
-            SELECT *
-            FROM timeline_members
-            WHERE
-                timeline_members.timeline_id = :timeline_id
-                AND
-                timeline_members.user_id = :user_id;
+                SELECT timeline_members.timeline_id , timeline_members.user_id 
+                FROM timeline_members, timelines , users
+                WHERE
+                    timeline_members.timeline_id = :timeline_id
+                    AND
+                    timeline_members.user_id = :user_id
+                GROUP BY timeline_members.timeline_id , timeline_members.user_id 
         ";
         $statement = $pdo->prepare($query);
         $statement->bindParam(':timeline_id', $timeline_id);

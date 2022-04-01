@@ -45,7 +45,9 @@ class AddMemberTimelineMiddleware implements IMiddleware {
     public function handle(Request $request): void
     {
         Validation::validate($_POST, [
-            'new_user_id'               => 'required|numeric|integer|min:1',
+            'email'                 => 'required|email',
+            'event_privilege_level' => 'required|in:read_only,create_event',
+            'chat_access'           => 'required|boolean',
         ]);
     }
 }

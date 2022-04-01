@@ -10,6 +10,7 @@ use Helpers\Response;
 use Pecee\Controllers\IResourceController;
 use Repository\TimeLineRepository;
 use Repository\TimeLineMemberRepository;
+use Repository\UserRepository;
 
 class TimelineController implements IResourceController
 {
@@ -60,9 +61,35 @@ class TimelineController implements IResourceController
     }
 
     public function addMember($id) {
-        $relations = TimeLineMemberRepository::findOneByTimelineIdAndUserId($id,$_POST['id']);
+        $timeline = TimeLineRepository::findOneById($id);
 
-        echo json_encode($relations);
+        if ($timeline == null) {
+            throw new ForbiddenException('Timeline does not exists');
+        }
+
+        if ($timeline['user_id'] != $_POST['user_id']) {
+            throw new ForbiddenException('You do not have access to this timeline');
+        }
+
+        $user = UserRepository::findOneByEmail($_POST['email']);
+
+        if ($user == null) {
+            throw new ForbiddenException('User with this email not found');
+        }
+
+        $relations = TimeLineMemberRepository::findOneByTimelineIdAndEmail($id,$user['id']);
+
+        if (count($relations) != 0){
+            throw new ForbiddenException("User is a member of this timeline");
+        }
+
+        TimeLineMemberRepository::create($id,$user['id'],$_POST['event_privilege_level'],$_POST['chat_access']);
+
+
+        return Response::message(
+            'User has been added to timelines member successfully',
+            null
+        );
     }
 
     public function update($id)
