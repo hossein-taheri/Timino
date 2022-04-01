@@ -10,4 +10,7 @@ SimpleRouter::group(['prefix' => '/user'], function () {
 
     SimpleRouter::get('/show/{id}', 'UserController@show')->setName('user.show');
 
+    SimpleRouter::get('/index', 'UserController@index', ['middleware' => [IndexUserMiddleware::class]])->setName('User.index');
+
+
 });
