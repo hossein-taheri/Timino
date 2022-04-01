@@ -2,10 +2,14 @@
 
 namespace Controllers;
 
+require_once "repositories/TimeLineRepository.php";
+require_once "repositories/TimeLineMemberRepository.php";
+
 use ForbiddenException;
 use Helpers\Response;
 use Pecee\Controllers\IResourceController;
 use Repository\TimeLineRepository;
+use Repository\TimeLineMemberRepository;
 
 class TimelineController implements IResourceController
 {
@@ -53,6 +57,12 @@ class TimelineController implements IResourceController
     public function edit($id)
     {
         echo "Edit" . $id;
+    }
+
+    public function addMember($id) {
+        $relations = TimeLineMemberRepository::findOneByTimelineIdAndUserId($id,$_POST['id']);
+
+        echo json_encode($relations);
     }
 
     public function update($id)

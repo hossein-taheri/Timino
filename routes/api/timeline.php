@@ -2,6 +2,7 @@
 
 require_once 'middlewares/validators/TimelineMiddlewares.php';
 
+use Middleware\AddMemberTimelineMiddleware;
 use Middleware\CreateTimelineMiddleware;
 use Middleware\IndexTimelineMiddleware;
 use Middleware\JWTAuthMiddleware;
@@ -20,6 +21,8 @@ SimpleRouter::group(['middleware'=>[JWTAuthMiddleware::class],'prefix' => '/time
     SimpleRouter::get('/show/{id}', 'TimelineController@show')->setName('timeline.show');
 
     SimpleRouter::post('/update/{id}', 'TimelineController@update', ['middleware' => [UpdateTimelineMiddleware::class]])->setName('timeline.update');
+
+    SimpleRouter::post('/add-member/{id}', 'TimelineController@addMember', ['middleware' => [AddMemberTimelineMiddleware::class]])->setName('timeline.update');
 
     SimpleRouter::post('/delete/{id}', 'TimelineController@destroy')->setName('timeline.delete');
 });

@@ -40,3 +40,12 @@ class UpdateTimelineMiddleware implements IMiddleware {
         ]);
     }
 }
+
+class AddMemberTimelineMiddleware implements IMiddleware {
+    public function handle(Request $request): void
+    {
+        Validation::validate($_POST, [
+            'new_user_id'               => 'required|numeric|integer|min:1',
+        ]);
+    }
+}
