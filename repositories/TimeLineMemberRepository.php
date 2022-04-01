@@ -6,7 +6,7 @@ use Helpers\PDOHelper;
 
 class TimeLineMemberRepository
 {
-    public static function findOneByTimelineIdAndEmail($timeline_id, $user_id)
+    public static function findOneByTimelineIdAndUserId($timeline_id, $user_id)
     {
         $pdo = $GLOBALS['pdo'];
         $query = "
@@ -44,6 +44,17 @@ class TimeLineMemberRepository
         $statement->bindParam(':user_id', $user_id);
         $statement->bindParam(':event_privilege_level', $event_privilege_level);
         $statement->bindParam(':chat_access', $chat_access);
+        PDOHelper::execute($statement);
+        return $statement->fetchAll();
+    }
+
+    public static function delete($timeline_id, $user_id)
+    {
+        $pdo = $GLOBALS['pdo'];
+        $query = "DELETE FROM `timeline_members` WHERE timeline_members.user_id = :user_id AND timeline_members.timeline_id = :timeline_id";
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(':timeline_id', $timeline_id);
+        $statement->bindParam(':user_id', $user_id);
         PDOHelper::execute($statement);
         return $statement->fetchAll();
     }

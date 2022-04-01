@@ -51,3 +51,12 @@ class AddMemberTimelineMiddleware implements IMiddleware {
         ]);
     }
 }
+
+class DeleteMemberTimelineMiddleware implements IMiddleware {
+    public function handle(Request $request): void
+    {
+        Validation::validate($_POST, [
+            'delete_user_id'        => 'required|numeric|integer|min:1',
+        ]);
+    }
+}
