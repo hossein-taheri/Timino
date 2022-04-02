@@ -31,9 +31,13 @@ class UserController
     {
         $per_page = 10;
 
-        $users = UserRepository::findUsers($_POST['user_id'], $per_page, $_GET['page'], $_GET['username']);
+        //$users = UserRepository::findUsers($_POST['user_id'], $per_page, $_GET['page'], $_GET['username']);
+        $users = UserRepository::findUsers($per_page, $_GET['page'], $_GET['username']);
 
-        $pages_count = UserRepository::countPagesUsers($_POST['user_id'],$per_page,$_GET['username']);
+
+        //$pages_count = UserRepository::countPagesUsers($_POST['user_id'],$per_page,$_GET['username']);
+        $pages_count = UserRepository::countPagesUsers($per_page,$_GET['username']);
+
 
         return Response::message(null, [
             'users' => $users,

@@ -1,5 +1,5 @@
 <?php
-require_once 'middlewares/validators/AuthMiddlewares.php';
+require_once 'middlewares/validators/UserMiddlewares.php';
 require_once 'middlewares/JWTAuthMiddleware.php';
 
 use Pecee\SimpleRouter\SimpleRouter;
@@ -13,6 +13,7 @@ SimpleRouter::group(['prefix' => '/user'], function () {
     SimpleRouter::get('/show/{id}', 'UserController@show')->setName('user.show');
 
     SimpleRouter::get('/search', 'UserController@search', ['middleware' => [searchMiddleware::class]])->setName('User.search');
+
 
 
 });
