@@ -23,8 +23,6 @@ SimpleRouter::group(['middleware'=>[JWTAuthMiddleware::class],'prefix' => '/time
 
     SimpleRouter::post('/update/{id}', 'TimelineController@update', ['middleware' => [UpdateTimelineMiddleware::class]])->setName('timeline.update');
 
-    SimpleRouter::post('/delete/{id}', 'TimelineController@destroy')->setName('timeline.delete');
-
     SimpleRouter::post('/add-member/{id}', 'TimelineController@addMember', ['middleware' => [AddMemberTimelineMiddleware::class]])->setName('timeline.add.member');
 
     SimpleRouter::post('/delete-member/{id}', 'TimelineController@deleteMember', ['middleware' => [DeleteMemberTimelineMiddleware::class]])->setName('timeline.delete.member');

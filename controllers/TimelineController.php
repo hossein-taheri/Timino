@@ -31,21 +31,40 @@ class TimelineController implements IResourceController
         ]);
     }
 
-    public function show($id)
+    public function show($timelineId)
     {
-        echo "Show" . $id;
-        // TODO: Implement show() method.
+        $timeline = TimeLineRepository::findOneById($timelineId);
+
+        if ($timeline == null) {
+            throw new ForbiddenException('Timeline does not exists');
+        }
+
+        if ($timeline['privilege_level'] == 'private'){
+            $timeline_member = TimeLineMemberRepository::findOneByTimelineIdAndUserId($timelineId, $_POST['user_id']);
+
+            if ($timeline_member == null) {
+                throw new ForbiddenException('User is not a member of this timeline');
+            }
+        }
+
+        return Response::message(null, [
+            'timeline' => $timeline
+        ]);
     }
 
     public function store()
     {
-        $timeline = TimeLineRepository::create(
+        TimeLineRepository::create(
             $_POST['user_id'],
             $_POST['title'],
             $_POST['description'],
             $_POST['avatar'],
             $_POST['privilege_level']
         );
+
+        $timeline = TimeLineRepository::findOneByUserId($_POST['user_id']);
+
+        $timeline_member = TimeLineMemberRepository::create($timeline['id'], $_POST['user_id'], 'create_event', 1);
 
         return Response::message('Timeline created successfully', null);
     }

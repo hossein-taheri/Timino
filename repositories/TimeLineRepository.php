@@ -73,6 +73,7 @@ class TimeLineRepository
                         timeline_members.user_id = :user_id
                 ) > 0
             )
+            ORDER BY `id` DESC
             LIMIT $per_page
             OFFSET $offset
            ";
@@ -102,5 +103,15 @@ class TimeLineRepository
         $statement->bindParam(':user_id', $user_id);
         PDOHelper::execute($statement);
         return ceil(($statement->fetchAll()[0][0]) / $per_page);
+    }
+
+    public static function findOneByUserId($user_id)
+    {
+        $pdo = $GLOBALS['pdo'];
+        $query = "SELECT * FROM `timelines` WHERE `user_id` = :user_id ORDER BY `id` DESC;";
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(':user_id', $user_id);
+        PDOHelper::execute($statement);
+        return $statement->fetchAll()[0];
     }
 }

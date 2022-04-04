@@ -76,5 +76,15 @@ class UserRepository {
         $statement->execute();
         return $statement->fetchAll();
     }
+
+    public static function findOneByEmailOrUsername($email, $username){
+        $pdo = $GLOBALS['pdo'];
+        $query = "SELECT * FROM users WHERE username = :username OR email = :email";
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(':username',$username);
+        $statement->bindParam(':email',$email);
+        $statement->execute();
+        return $statement->fetchAll()[0];
+    }
 }
 
