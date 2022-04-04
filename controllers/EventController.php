@@ -2,17 +2,16 @@
 namespace Controllers;
 use Pecee\Controllers\IResourceController;
 
-class EventController implements IResourceController{
+class EventController{
 
-    public function index()
+    public function index($timelineId)
     {
-        // TODO: Implement index() method.
+
     }
 
-    public function show($timelineId)
+    public function show($eventId,$timelineId)
     {
-        echo $timelineId;
-        // TODO: Implement show() method.
+
     }
 
     public function store()
@@ -20,9 +19,9 @@ class EventController implements IResourceController{
         // TODO: Implement store() method.
     }
 
-    public function create()
+    public function create($timelineId)
     {
-        // TODO: Implement create() method.
+
     }
 
     public function edit($id)
@@ -30,9 +29,9 @@ class EventController implements IResourceController{
         // TODO: Implement edit() method.
     }
 
-    public function update($id)
+    public function update($eventId,$timelineId)
     {
-        // TODO: Implement update() method.
+        
     }
 
     public function destroy($id)
