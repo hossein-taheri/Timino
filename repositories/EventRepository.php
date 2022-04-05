@@ -8,7 +8,7 @@ class EventRepository
 {
     public static function findAllByTimelineId($timeline_id){
         $pdo = $GLOBALS['pdo'];
-        $query = "SELECT * FROM `events` WHERE `events`.timeline_id = :timeline_id";
+        $query = "SELECT * FROM `events` WHERE `events`.timeline_id = :timeline_id ORDER BY `id` DESC ";
         $statement = $pdo->prepare($query);
         $statement->bindParam(':timeline_id', $timeline_id);
         PDOHelper::execute($statement);
