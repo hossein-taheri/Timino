@@ -16,7 +16,7 @@ class EventController{
         $timelineMember = TimeLineMemberRepository::findOneByTimelineIdAndUserId($timelineId,$_POST['user_id']);
 
         if ($timelineMember == null) {
-            throw new NotFoundException('You are not a member of this timeline');
+            throw new ForbiddenException('You are not a member of this timeline');
         }
 
         $events = EventRepository::findAllByTimelineId($timelineId);
@@ -34,7 +34,7 @@ class EventController{
         $timelineMember = TimeLineMemberRepository::findOneByTimelineIdAndUserId($timelineId,$_POST['user_id']);
 
         if ($timelineMember == null) {
-            throw new NotFoundException('You are not a member of this timeline');
+            throw new ForbiddenException('You are not a member of this timeline');
         }
 
         $event = EventRepository::findOneById($eventId);
