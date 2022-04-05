@@ -9,6 +9,7 @@ require_once "repositories/UserRepository.php";
 require_once "repositories/ForgotPasswordRepository.php";
 require_once "repositories/VerifyEmailRepository.php";
 require_once "repositories/TimeLineRepository.php";
+require_once "repositories/EventRepository.php";
 
 use ForbiddenException;
 use Helpers\RandomGenerator;

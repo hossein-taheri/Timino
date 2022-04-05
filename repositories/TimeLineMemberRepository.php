@@ -10,19 +10,19 @@ class TimeLineMemberRepository
     {
         $pdo = $GLOBALS['pdo'];
         $query = "
-                SELECT timeline_members.timeline_id , timeline_members.user_id 
+                SELECT timeline_members.timeline_id , timeline_members.user_id  , timeline_members.event_privilege_level, timeline_members.chat_access
                 FROM timeline_members, timelines , users
                 WHERE
                     timeline_members.timeline_id = :timeline_id
                     AND
                     timeline_members.user_id = :user_id
-                GROUP BY timeline_members.timeline_id , timeline_members.user_id 
+                LIMIT 1
         ";
         $statement = $pdo->prepare($query);
         $statement->bindParam(':timeline_id', $timeline_id);
         $statement->bindParam(':user_id', $user_id);
         PDOHelper::execute($statement);
-        return $statement->fetchAll();
+        return $statement->fetchAll()[0];
     }
     public static function create($timeline_id, $user_id, $event_privilege_level, $chat_access)
     {

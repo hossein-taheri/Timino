@@ -36,7 +36,7 @@ class TimelineController implements IResourceController
         $timeline = TimeLineRepository::findOneById($timelineId);
 
         if ($timeline == null) {
-            throw new ForbiddenException('Timeline does not exists');
+            throw new NotFoundException('Timeline does not exists');
         }
 
         if ($timeline['privilege_level'] == 'private'){
@@ -127,9 +127,9 @@ class TimelineController implements IResourceController
             throw new ForbiddenException('User with this email not found');
         }
 
-        $relations = TimeLineMemberRepository::findOneByTimelineIdAndUserId($id, $user['id']);
+        $timeLineMember = TimeLineMemberRepository::findOneByTimelineIdAndUserId($id, $user['id']);
 
-        if (count($relations) != 0) {
+        if ($timeLineMember != null) {
             throw new ForbiddenException("User is a member of this timeline");
         }
 
