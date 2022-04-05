@@ -13,10 +13,18 @@ class EventController{
 
     public function index($timelineId)
     {
-        $timelineMember = TimeLineMemberRepository::findOneByTimelineIdAndUserId($timelineId,$_POST['user_id']);
+        $timeline = TimeLineRepository::findOneById($timelineId);
 
-        if ($timelineMember == null) {
-            throw new ForbiddenException('You are not a member of this timeline');
+        if ($timeline == null) {
+            throw new NotFoundException('Timeline does not exists');
+        }
+
+        if ($timeline['privilege_level'] == 'private'){
+            $timeline_member = TimeLineMemberRepository::findOneByTimelineIdAndUserId($timelineId, $_POST['user_id']);
+
+            if ($timeline_member == null) {
+                throw new ForbiddenException('User is not a member of this timeline');
+            }
         }
 
         $events = EventRepository::findAllByTimelineId($timelineId);

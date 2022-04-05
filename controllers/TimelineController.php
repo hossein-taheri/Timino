@@ -7,6 +7,7 @@ require_once "repositories/TimeLineMemberRepository.php";
 
 use ForbiddenException;
 use Helpers\Response;
+use NotFoundException;
 use Pecee\Controllers\IResourceController;
 use Repository\TimeLineRepository;
 use Repository\TimeLineMemberRepository;
