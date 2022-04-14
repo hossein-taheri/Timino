@@ -18,7 +18,6 @@ use Helpers\EmailDispatcher;
 use Helpers\Response;
 use JWTHelper;
 use Repository\ForgotPasswordRepository;
-use Repository\TimeLineRepository;
 use Repository\UserRepository;
 use Repository\VerifyEmailRepository;
 
@@ -192,7 +191,6 @@ class AuthController{
             null
         );
     }
-
     public function searchUsername(){
         $usernames = UserRepository::findAllByUsername($_POST['username']);
         if($usernames == null){

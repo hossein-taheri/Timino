@@ -9,7 +9,7 @@ class UserRepository {
     }
     public static function findOneById($id){
         $pdo = $GLOBALS['pdo'];
-        $query = "SELECT * FROM users WHERE id = :id";
+        $query = "SELECT username,first_name,last_name,email,avatar,role FROM users WHERE id = :id AND is_confirmed = 1";
         $statement = $pdo->prepare($query);
         $statement->bindParam(":id", $id);
         $statement->execute();
@@ -67,9 +67,13 @@ class UserRepository {
     }
 
     public static function findAllByUsername($username){
-        $username = "%$username%";
+        $username = "$username%";
         $pdo = $GLOBALS['pdo'];
-        $query = "SELECT username,first_name,last_name,email FROM users WHERE username LIKE :username LIMIT 5";
+        $query = "
+            SELECT id,username,first_name,last_name,avatar,role
+            FROM users
+            WHERE username LIKE :username AND is_confirmed = 1 
+            LIMIT 5";
 
         $statement = $pdo->prepare($query);
         $statement->bindParam(':username',$username);
@@ -77,6 +81,7 @@ class UserRepository {
         return $statement->fetchAll();
     }
 
+<<<<<<< HEAD
     public static function findOneByEmailOrUsername($email, $username){
         $pdo = $GLOBALS['pdo'];
         $query = "SELECT * FROM users WHERE username = :username OR email = :email";
@@ -85,6 +90,48 @@ class UserRepository {
         $statement->bindParam(':email',$email);
         $statement->execute();
         return $statement->fetchAll()[0];
+=======
+   // public static function findUsers($user_id, $per_page, $page,$username)
+    public static function findUsers($per_page, $page,$username)
+
+    {
+        $offset = $per_page * ($page - 1);
+        $username = "$username%";
+        $pdo = $GLOBALS['pdo'];
+        $query = "
+            SELECT id,username,first_name,last_name,avatar,role
+            FROM users 
+            WHERE  username LIKE :username AND is_confirmed = 1
+            LIMIT $per_page
+            OFFSET $offset
+           ";
+        $statement = $pdo->prepare($query);
+        //$statement->bindParam(':user_id', $user_id);
+        $statement->bindParam(':username',$username);
+        //PDOHelper::execute($statement);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
+    //public static function countPagesUsers($user_id,$per_page,$username)
+    public static function countPagesUsers($per_page,$username)
+
+    {
+        $username = "$username%";
+        $pdo = $GLOBALS['pdo'];
+        $query = "
+            SELECT COUNT(*) FROM timelines 
+            WHERE username LIKE :username AND is_confirmed = 1
+           ";
+        $statement = $pdo->prepare($query);
+        //$statement->bindParam(':user_id', $user_id);
+        $statement->bindParam(':username',$username);
+        //PDOHelper::execute($statement);
+        $statement->execute();
+
+        return ceil(($statement->fetchAll()[0][0]) / $per_page);
+>>>>>>> Sprint-3-M
     }
 }
 
