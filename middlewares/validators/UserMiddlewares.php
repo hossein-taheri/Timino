@@ -15,5 +15,6 @@ class searchMiddleware implements IMiddleware {
         Validation::validate($_GET, [
             'page'                  => 'numeric|integer|default:1|min:1',
         ]);
+        $_GET['page'] = 1;
     }
 }

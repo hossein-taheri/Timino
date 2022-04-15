@@ -81,7 +81,6 @@ class UserRepository {
         return $statement->fetchAll();
     }
 
-<<<<<<< HEAD
     public static function findOneByEmailOrUsername($email, $username){
         $pdo = $GLOBALS['pdo'];
         $query = "SELECT * FROM users WHERE username = :username OR email = :email";
@@ -90,10 +89,8 @@ class UserRepository {
         $statement->bindParam(':email',$email);
         $statement->execute();
         return $statement->fetchAll()[0];
-=======
-   // public static function findUsers($user_id, $per_page, $page,$username)
+    }
     public static function findUsers($per_page, $page,$username)
-
     {
         $offset = $per_page * ($page - 1);
         $username = "$username%";
@@ -106,17 +103,12 @@ class UserRepository {
             OFFSET $offset
            ";
         $statement = $pdo->prepare($query);
-        //$statement->bindParam(':user_id', $user_id);
         $statement->bindParam(':username',$username);
-        //PDOHelper::execute($statement);
         $statement->execute();
-
         return $statement->fetchAll();
     }
 
-    //public static function countPagesUsers($user_id,$per_page,$username)
     public static function countPagesUsers($per_page,$username)
-
     {
         $username = "$username%";
         $pdo = $GLOBALS['pdo'];
@@ -129,9 +121,7 @@ class UserRepository {
         $statement->bindParam(':username',$username);
         //PDOHelper::execute($statement);
         $statement->execute();
-
         return ceil(($statement->fetchAll()[0][0]) / $per_page);
->>>>>>> Sprint-3-M
     }
 }
 
