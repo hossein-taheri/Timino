@@ -1,6 +1,6 @@
 <?php
 
-require_once 'dotenv.php';
+//require_once 'dotenv.php';
 
 require_once 'config.php';
 
