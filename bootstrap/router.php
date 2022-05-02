@@ -11,7 +11,7 @@ require_once 'middlewares/JWTAuthMiddleware.php';
 
 require_once "controllers/AuthController.php";
 require_once "controllers/UserController.php";
-require_once "controllers/TimelineController.php";
+require_once "controllers/TimeLineController.php";
 require_once "controllers/EventController.php";
 require_once "controllers/UploadController.php";
 
