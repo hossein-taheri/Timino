@@ -14,6 +14,7 @@ require_once "controllers/UserController.php";
 require_once "controllers/TimeLineController.php";
 require_once "controllers/EventController.php";
 require_once "controllers/UploadController.php";
+require_once "controllers/CategoryController.php";
 
 SimpleRouter::setDefaultNamespace('Controllers');
 
