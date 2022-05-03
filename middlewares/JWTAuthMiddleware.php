@@ -38,7 +38,7 @@ class JWTAdminAuthMiddleware implements IMiddleware
         $user = UserRepository::findOneById($_POST['user_id']);
 
         if ($user['role'] != 'admin'){
-            throw new ForbiddenException("Token is not a bearer token");
+            throw new ForbiddenException("This route is accessible only for admin");
         }
 
     }

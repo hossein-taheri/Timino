@@ -1,9 +1,10 @@
 <?php
+namespace Repository;
 
 use Helpers\PDOHelper;
 
 class CategoryRepository {
-    public static function findAll($timeline_id){
+    public static function findAll(){
         $pdo = $GLOBALS['pdo'];
         $query = "SELECT * FROM `categories`";
         $statement = $pdo->prepare($query);

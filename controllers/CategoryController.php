@@ -1,20 +1,39 @@
 <?php
+namespace Controllers;
 
-use Pecee\Controllers\IResourceController;
+require_once 'repositories/CategoryRepository.php';
+
+use Helpers\Response;
+use Repository\CategoryRepository;
 
 class CategoryController {
     public function index()
     {
-        // TODO: Implement index() method.
+        $categories = CategoryRepository::findAll();
+
+        return Response::message(
+            null,
+            $categories
+        );
     }
 
     public function store()
     {
-        // TODO: Implement store() method.
+        CategoryRepository::create($_POST['name']);
+
+        return Response::message(
+            'category created successfully',
+            null
+        );
     }
 
     public function update($id)
     {
-        // TODO: Implement update() method.
+        CategoryRepository::update($id, $_POST['name']);
+
+        return Response::message(
+            'category updated successfully',
+            null
+        );
     }
 }
