@@ -1,7 +1,7 @@
 <?php
 namespace Controllers;
 
-require_once 'repositories/CategoryRepository.php';
+require_once 'repositories/CommentRepository.php';
 
 use ForbiddenException;
 use Helpers\Response;
@@ -33,7 +33,7 @@ class CommentController {
             throw new ForbiddenException('You are not a member of this timeline');
         }
 
-        CommentRepository::create($timelineId,$eventId,$_POST['user_id'],$_POST['message']);
+        CommentRepository::create($eventId,$_POST['user_id'],$_POST['message']);
 
         return Response::message(
             'category created successfully',
