@@ -7,6 +7,7 @@ use ForbiddenException;
 use JWTHelper;
 use Pecee\Http\Middleware\IMiddleware;
 use Pecee\Http\Request;
+use Repository\UserRepository;
 
 class JWTAuthMiddleware implements IMiddleware
 {
@@ -26,6 +27,19 @@ class JWTAuthMiddleware implements IMiddleware
         $decoded = JWTHelper::decodeAccessToken($bearerToken[1]);
 
         $_POST['user_id'] = $decoded['user_id'] ;
+
+    }
+}
+
+class JWTAdminAuthMiddleware implements IMiddleware
+{
+    public function handle(Request $request): void
+    {
+        $user = UserRepository::findOneById($_POST['user_id']);
+
+        if ($user['role'] != 'admin'){
+            throw new ForbiddenException("Token is not a bearer token");
+        }
 
     }
 }
