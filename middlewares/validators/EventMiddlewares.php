@@ -21,7 +21,7 @@ class CreateEventMiddlewares implements IMiddleware {
     {
         Validation::validate($_POST, [
             'title'                 => 'required|min:5|max:50',
-            'description'           => 'min:10|max:45',
+            'description'           => 'min:10|max:2500',
         ]);
     }
 }
@@ -31,7 +31,7 @@ class UpdateEventMiddlewares implements IMiddleware {
     {
         Validation::validate($_POST, [
             'title'                 => 'required|min:5|max:50',
-            'description'           => 'min:10|max:45',
+            'description'           => 'min:10|max:2500',
         ]);
     }
 }
