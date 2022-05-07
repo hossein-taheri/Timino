@@ -13,10 +13,12 @@ class ChatMessageMigration
                 `timeline_id` int(10) NOT NULL,
                 `user_id` int(10) NOT NULL,
                 `message` varchar(500) NOT NULL,
-                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,     
+                `parent_id` int(10),
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`),
                 FOREIGN KEY (`timeline_id`) REFERENCES timelines(`id`),
-                FOREIGN KEY (`user_id`) REFERENCES users(`id`) 
+                FOREIGN KEY (`user_id`) REFERENCES users(`id`),
+                FOREIGN KEY (`parent_id`) REFERENCES chat_messages(`id`)
             );
         ");
     }
