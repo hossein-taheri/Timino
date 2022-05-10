@@ -14,7 +14,7 @@ class TimeLineMigration
                 `title` varchar(250) NOT NULL,
                 `description` varchar(4000),
                 `avatar` varchar(250),
-                `privilege_level` ENUM('private','public') NOT NULL DEFAULT 'private',
+                `privilege_level` ENUM('private','tmp') NOT NULL DEFAULT 'private',
                 `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,     
                 PRIMARY KEY (`id`),
                 FOREIGN KEY (`user_id`) REFERENCES users(`id`) 

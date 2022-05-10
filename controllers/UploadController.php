@@ -28,11 +28,11 @@ class UploadController
         $video_extensions = array("mp4", "mov", "mkv", "avi", "wmv");
 
         if (in_array($file_ext, $image_extensions)) {
-            $destination = '/public/images/';
+            $destination = '/tmp/images/';
         } else if (in_array($file_ext, $audio_extensions)){
-            $destination = '/public/audios/';
+            $destination = '/tmp/audios/';
         } else if (in_array($file_ext, $video_extensions)){
-            $destination = '/public/videos/';
+            $destination = '/tmp/videos/';
         } else{
             throw new InternalServerErrorException("extension not allowed, please choose a JPEG or PNG file.");
         }
@@ -43,7 +43,7 @@ class UploadController
 
         $final_file_name =  $destination . microtime(true)  . '.'. $file_name;
 
-        $moved = move_uploaded_file($file_tmp,  '.' . $final_file_name );
+        $moved = move_uploaded_file($file_tmp,  $final_file_name );
 
         if (!$moved){
             throw new InternalServerErrorException("File has not uploaded");

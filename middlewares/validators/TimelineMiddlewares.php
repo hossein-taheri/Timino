@@ -25,7 +25,7 @@ class CreateTimelineMiddleware implements IMiddleware {
             'title'                 => 'required|min:5|max:50',
             'description'           => 'min:10|max:100',
             'avatar'                => 'min:5|max:25',
-            'privilege_level'       => 'required|in:private,public',
+            'privilege_level'       => 'required|in:private,tmp',
         ]);
     }
 }
@@ -37,7 +37,7 @@ class UpdateTimelineMiddleware implements IMiddleware {
             'title'                 => 'required|min:5|max:50',
             'description'           => 'min:10|max:100',
             'avatar'                => 'min:5|max:25',
-            'privilege_level'       => 'required|in:private,public',
+            'privilege_level'       => 'required|in:private,tmp',
         ]);
     }
 }
