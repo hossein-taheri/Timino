@@ -41,7 +41,7 @@ class UploadController
             throw new InternalServerErrorException("File size must be less than 2 MB");
         }
 
-        $final_file_name =  $destination . system('date +%s%N') . '.'. $file_name;
+        $final_file_name =  $destination . microtime(true)  . '.'. $file_name;
 
         $moved = move_uploaded_file($file_tmp,  '.' . $final_file_name );
 
