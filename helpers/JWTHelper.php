@@ -8,7 +8,7 @@ class JWTHelper {
     public static function encodeAccessToken($id): array
     {
         $iat = time();
-        $nbf = $iat + ( 12 * 30 * 24 * 60 * 60 ); // TODO :: reduce this
+        $nbf = $iat + ( 2 * 60 );
 
         $key = $GLOBALS['config']['keys']['JWT'];
 

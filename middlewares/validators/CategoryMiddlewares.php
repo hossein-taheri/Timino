@@ -8,7 +8,7 @@ use Pecee\Http\Middleware\IMiddleware;
 use Pecee\Http\Request;
 
 
-class IndexEventMiddlewares implements IMiddleware {
+class IndexCategoryMiddleware implements IMiddleware {
     public function handle(Request $request): void
     {
         Validation::validate($_GET, [
@@ -16,22 +16,20 @@ class IndexEventMiddlewares implements IMiddleware {
     }
 }
 
-class CreateEventMiddlewares implements IMiddleware {
+class CreateCategoryMiddleware implements IMiddleware {
     public function handle(Request $request): void
     {
         Validation::validate($_POST, [
-            'title'                 => 'required|min:5|max:50',
-            'description'           => 'min:10|max:2500',
+            'name'                 => 'required|min:3|max:50',
         ]);
     }
 }
 
-class UpdateEventMiddlewares implements IMiddleware {
+class UpdateCategoryMiddleware implements IMiddleware {
     public function handle(Request $request): void
     {
         Validation::validate($_POST, [
-            'title'                 => 'required|min:5|max:50',
-            'description'           => 'min:10|max:2500',
+            'name'                 => 'required|min:3|max:50',
         ]);
     }
 }

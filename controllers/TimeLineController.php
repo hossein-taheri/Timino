@@ -13,8 +13,19 @@ use Repository\TimeLineRepository;
 use Repository\TimeLineMemberRepository;
 use Repository\UserRepository;
 
-class TimelineController implements IResourceController
+class TimeLineController implements IResourceController
 {
+    public function search()
+    {
+        $timeline_name = TimeLineRepository::findAllByName($_GET['title']);
+        if ($timeline_name == null) {
+            throw new NotFoundException("This record not found.");
+        }
+        return Response::message(
+            'These records were found',
+            $timeline_name
+        );
+    }
 
     public function index()
     {

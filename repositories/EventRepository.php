@@ -17,14 +17,15 @@ class EventRepository
 
     public static function create($timeline_id, $user_id, $title, $description)
     {
-        //TODO :: add short description
+        $short_description = substr($description, 0, 50);
         $pdo = $GLOBALS['pdo'];
-        $query = "INSERT INTO `events`(`timeline_id`, `user_id`, `title`, `description`) VALUES (:timeline_id,:user_id,:title,:description)";
+        $query = "INSERT INTO `events`(`timeline_id`, `user_id`, `title`, `description`, `short_description`) VALUES (:timeline_id,:user_id,:title,:description,:short_description)";
         $statement = $pdo->prepare($query);
         $statement->bindParam(':timeline_id', $timeline_id);
         $statement->bindParam(':user_id', $user_id);
         $statement->bindParam(':title', $title);
         $statement->bindParam(':description', $description);
+        $statement->bindParam(':short_description', $short_description);
         PDOHelper::execute($statement);
         return $statement->fetchAll();
     }
