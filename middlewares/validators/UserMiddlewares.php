@@ -18,3 +18,16 @@ class searchMiddleware implements IMiddleware {
         $_GET['page'] = 1;
     }
 }
+
+class UpdateUserMiddleware implements IMiddleware {
+    public function handle(Request $request): void
+    {
+        Validation::validate($_POST, [
+            'first_name'            => 'required|min:3|max:45',
+            'last_name'             => 'required|min:3|max:45',
+            'avatar'                => 'min:6|max:45',
+            'phone'                 => 'min:11|max:11',
+            'gender'                => 'in:male,public',
+        ]);
+    }
+}

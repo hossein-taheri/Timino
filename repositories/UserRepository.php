@@ -7,9 +7,17 @@ class UserRepository {
     public static function findAll(){
         //TODO :: write findAll user query ( by conditions )
     }
-    public static function findOneById($id){
+    public static function findUsernameNameAvatarById($id){
         $pdo = $GLOBALS['pdo'];
         $query = "SELECT username,first_name,last_name,email,avatar,role FROM users WHERE id = :id AND is_confirmed = 1";
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(":id", $id);
+        $statement->execute();
+        return $statement->fetchAll()[0];
+    }
+    public static function findOneById($id){
+        $pdo = $GLOBALS['pdo'];
+        $query = "SELECT username,first_name,last_name,email,avatar,role,gender,phone FROM users WHERE id = :id AND is_confirmed = 1";
         $statement = $pdo->prepare($query);
         $statement->bindParam(":id", $id);
         $statement->execute();
@@ -43,8 +51,18 @@ class UserRepository {
         $statement->bindParam(':password',$password);
         $statement->execute();
     }
-    public static function update(){
-        //TODO :: write update user query
+        public static function update($user_id, $first_name, $last_name, $avatar, $phone, $gender){
+        $pdo = $GLOBALS['pdo'];
+        $query = "UPDATE `users` SET `first_name`=:first_name,`last_name`=:last_name,`avatar`=:avatar,`phone`=:phone,`gender`=:gender WHERE id = :id";
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(':id', $user_id);
+        $statement->bindParam(':first_name', $first_name);
+        $statement->bindParam(':last_name', $last_name);
+        $statement->bindParam(':avatar', $avatar);
+        $statement->bindParam(':phone', $phone);
+        $statement->bindParam(':gender', $gender);
+        PDOHelper::execute($statement);
+        return $statement->fetchAll();
     }
     public static function deleteById($id)
     {
