@@ -32,7 +32,9 @@ class TimeLineController implements IResourceController
         $per_page = 10;
 
         $timelines = TimeLineRepository::findUserTimelines($_POST['user_id'], $per_page, $_GET['page']);
-
+        if($timelines == null){
+            throw new NotFoundException("This record not found.");
+        }
         $pages_count = TimeLineRepository::countPagesUserTimelines($_POST['user_id'], $per_page);
 
         return Response::message(null, [

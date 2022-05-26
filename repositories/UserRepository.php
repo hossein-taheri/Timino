@@ -88,7 +88,7 @@ class UserRepository {
         $username = "$username%";
         $pdo = $GLOBALS['pdo'];
         $query = "
-            SELECT id,username,first_name,last_name,avatar,role
+            SELECT id,username,email,first_name,last_name,avatar,role
             FROM users
             WHERE username LIKE :username AND is_confirmed = 1 
             LIMIT 5";
