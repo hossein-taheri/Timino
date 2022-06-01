@@ -8,24 +8,25 @@ class EventRepository
 {
     public static function findAllByTimelineId($timeline_id){
         $pdo = $GLOBALS['pdo'];
-        $query = "SELECT * FROM `events` WHERE `events`.timeline_id = :timeline_id ORDER BY `id` DESC ";
+        $query = "SELECT * FROM `events` WHERE `events`.timeline_id = :timeline_id ORDER BY `date` DESC";
         $statement = $pdo->prepare($query);
         $statement->bindParam(':timeline_id', $timeline_id);
         PDOHelper::execute($statement);
         return $statement->fetchAll();
     }
 
-    public static function create($timeline_id, $user_id, $title, $description)
+    public static function create($timeline_id, $user_id, $title, $description, $date)
     {
         $short_description = substr($description, 0, 50);
         $pdo = $GLOBALS['pdo'];
-        $query = "INSERT INTO `events`(`timeline_id`, `user_id`, `title`, `description`, `short_description`) VALUES (:timeline_id,:user_id,:title,:description,:short_description)";
+        $query = "INSERT INTO `events`(`timeline_id`, `user_id`, `title`, `description`, `short_description`, `date`) VALUES (:timeline_id,:user_id,:title,:description,:short_description,:date)";
         $statement = $pdo->prepare($query);
         $statement->bindParam(':timeline_id', $timeline_id);
         $statement->bindParam(':user_id', $user_id);
         $statement->bindParam(':title', $title);
         $statement->bindParam(':description', $description);
         $statement->bindParam(':short_description', $short_description);
+        $statement->bindParam(':date', $date);
         PDOHelper::execute($statement);
         return $statement->fetchAll();
     }

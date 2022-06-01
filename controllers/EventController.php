@@ -71,7 +71,7 @@ class EventController{
             throw new ForbiddenException("You dont have permission to create an event in this timeline");
         }
 
-        $event = EventRepository::create($timelineId,$_POST['user_id'],$_POST['title'],$_POST['description']);
+        $event = EventRepository::create($timelineId,$_POST['user_id'],$_POST['title'],$_POST['description'],$_POST['date']);
 
         return Response::message(
             null,

@@ -49,13 +49,25 @@ class UserController
 
     public function show($id)
     {
-        $username = UserRepository::findOneById($id);
-        if($username == null){
+        $user = UserRepository::findUsernameNameAvatarById($id);
+        if($user == null){
             throw new NotFoundException("This record not found.");
         }
         return Response::message(
             'This record were found',
-            $username
+            $user
+        );
+    }
+
+    public function myProfile()
+    {
+        $user = UserRepository::findOneById($_POST['user_id']);
+        if($user == null){
+            throw new NotFoundException("This record not found.");
+        }
+        return Response::message(
+            'This record was found',
+            $user
         );
     }
 
@@ -74,9 +86,19 @@ class UserController
         // TODO: Implement edit() method.
     }
 
-    public function update($id)
+    public function update()
     {
-        // TODO: Implement update() method.
+        $user = UserRepository::findOneById($_POST['user_id']);
+        if($user == null){
+            throw new NotFoundException("This record not found.");
+        }
+        UserRepository::update($_POST['user_id'],$_POST['first_name'],$_POST['last_name'],$_POST['avatar'],$_POST['phone'],$_POST['gender']);
+
+        $user = UserRepository::findOneById($_POST['user_id']);
+        return Response::message(
+            'This record was found',
+            $user
+        );
     }
 
     public function destroy($id)

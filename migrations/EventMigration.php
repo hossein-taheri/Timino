@@ -16,6 +16,7 @@ class EventMigration
                 `description` varchar(4000),
                 `short_description` varchar(100),
                 `coordinate` POINT,
+                `date` TIMESTAMP NOT NULL ,
                 `likes_count` int(10) NOT NULL DEFAULT 0,
                 `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`),
