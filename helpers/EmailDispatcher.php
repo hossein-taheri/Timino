@@ -11,7 +11,7 @@ class EmailDispatcher
     public function send($emails, $subject, $body)
     {
         $email = $GLOBALS['config']['email'];
-        $phpmailer = new PHPMailer();
+        $phpmailer = new PHPMailer(true);
         $phpmailer->isSMTP();
         $phpmailer->Host = $email['host'];
         $phpmailer->SMTPAuth = true;
@@ -28,8 +28,7 @@ class EmailDispatcher
 
         $phpmailer->isHTML(true);                                  //Set email format to HTML
         $phpmailer->Subject = $subject;
-        $phpmailer->Body    = $body;
-
+        $phpmailer->Body = $body;
         $phpmailer->send();
     }
 }

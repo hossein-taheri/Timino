@@ -1,4 +1,5 @@
 <?php
+
 namespace Controllers;
 
 require_once "helpers/EmailDispatcher.php";
@@ -21,29 +22,29 @@ use Repository\ForgotPasswordRepository;
 use Repository\UserRepository;
 use Repository\VerifyEmailRepository;
 
-class AuthController{
+class AuthController
+{
     public function register()
     {
-        $user = UserRepository::findOneByEmailOrUsername($_POST['email'],$_POST['username']);
+        $user = UserRepository::findOneByEmailOrUsername($_POST['email'], $_POST['username']);
 
-        if ($user['is_confirmed'] == false){
+        if ($user['is_confirmed'] == false) {
             UserRepository::deleteById($user['id']);
             $user = null;
         }
 
-        if($user != null)
-        {
+        if ($user != null) {
             throw new ForbiddenException("The entered username or email is exist");
         }
 
-        UserRepository::create($_POST['username'],$_POST['email'],$_POST['first_name'],$_POST['last_name'],$_POST['password']);
+        UserRepository::create($_POST['username'], $_POST['email'], $_POST['first_name'], $_POST['last_name'], $_POST['password']);
 
-        $user = UserRepository::findOneByEmailOrUsername($_POST['email'],$_POST['username']);
+        $user = UserRepository::findOneByEmailOrUsername($_POST['email'], $_POST['username']);
 
         $token = RandomGenerator::generateRandomString(32);
 
 
-        VerifyEmailRepository::create($user['email'],$token);
+        VerifyEmailRepository::create($user['email'], $token);
 
         EmailDispatcher::send(
             [
@@ -54,13 +55,11 @@ class AuthController{
                 <h3>Dear $user[first_name] </h3>
                 <h3> Welcome to Timino </h3>
                 <h4>Press the below button to Verify email</h4>
-                <form method='get' action='http://$_SERVER[HTTP_HOST]/api/auth/verify-email'>
-                    <input type='hidden' name='email' value='$user[email]'>
-                    <input type='hidden' name='token' value='$token'>
-                    <button type='submit'>
-                        Submit
-                    </button>
-                </form>
+                <a href='http://$_SERVER[HTTP_HOST]/api/auth/verify-email?email=$user[email]&token=$token'>
+                <button type='submit'>
+                    Submit
+                </button>
+                </a>
             "
         );
 
@@ -73,9 +72,9 @@ class AuthController{
 
     public function verifyEmail()
     {
-        $loginVerify = VerifyEmailRepository::findOneByEmailAndToken($_GET['email'],$_GET['token']);
+        $loginVerify = VerifyEmailRepository::findOneByEmailAndToken($_GET['email'], $_GET['token']);
 
-        if ($loginVerify == null){
+        if ($loginVerify == null) {
             throw new NotFoundException("The entered email or token is not correct");
         }
 
@@ -87,15 +86,15 @@ class AuthController{
     public function login()
     {
         $user = UserRepository::findOneByEmailOrUsername($_POST['username'], $_POST['username']);
-        if ( $user == null ){
+        if ($user == null) {
             throw new ForbiddenException("The entered username or password is not correct");
         }
 
-        if ( $user['password'] != $_POST['password'] ){
+        if ($user['password'] != $_POST['password']) {
             throw new ForbiddenException("The entered username or password is not correct");
         }
 
-        if ( $user['is_confirmed'] == 0 ){
+        if ($user['is_confirmed'] == 0) {
             throw new ForbiddenException("Your account has not been confirmed");
         }
 
@@ -123,20 +122,19 @@ class AuthController{
     public function forgotPasswordSendEmail()
     {
         $user = UserRepository::findOneByEmailOrUsername($_POST['email'], $_POST['email']);
-        if($user == null)
-        {
+        if ($user == null) {
             throw new ForbiddenException("The entered username or email is not correct We can not send confirmation email ");
         }
 
 
-        $email= $_POST['email'];
-        $verified_code= rand(100000,999999);
-        $expires_at= time()+ 60 * 5;
-        $subject='Forgot password';
-        $body='<p>Your verified code is: </p>'.$verified_code;
+        $email = $_POST['email'];
+        $verified_code = rand(100000, 999999);
+        $expires_at = time() + 60 * 5;
+        $subject = 'Forgot password';
+        $body = '<p>Your verified code is: </p>' . $verified_code;
 
 
-        ForgotPasswordRepository::RecordForgotPassword($email,$verified_code,$expires_at );// forgot password record in database
+        ForgotPasswordRepository::RecordForgotPassword($email, $verified_code, $expires_at);// forgot password record in database
 
         EmailDispatcher::send([$email], $subject, $body);
 
@@ -155,7 +153,7 @@ class AuthController{
             throw new NotFoundException('The entered email or code is not correct');
         }
 
-        if( $forgotPassword['expires_at'] < time() ) {
+        if ($forgotPassword['expires_at'] < time()) {
             throw new ForbiddenException('The code has been expired');
         }
 
@@ -176,24 +174,26 @@ class AuthController{
             throw new NotFoundException('The entered email or code is not correct');
         }
 
-        if( $forgotPassword['expires_at'] < time() ) {
+        if ($forgotPassword['expires_at'] < time()) {
             throw new ForbiddenException('The code has been expired');
         }
 
-        if( !$forgotPassword['is_verified'] ) {
+        if (!$forgotPassword['is_verified']) {
             throw new ForbiddenException('The code has not been verified');
         }
 
-        UserRepository::updatePasswordByEmail($forgotPassword['email'],$_POST['password']);
+        UserRepository::updatePasswordByEmail($forgotPassword['email'], $_POST['password']);
 
         return Response::message(
             'Your password has been changed successfully',
             null
         );
     }
-    public function searchUsername(){
+
+    public function searchUsername()
+    {
         $usernames = UserRepository::findAllByUsername($_POST['username']);
-        if($usernames == null){
+        if ($usernames == null) {
             throw new ForbiddenException("This record not found.");
         }
         return Response::message(
@@ -202,9 +202,10 @@ class AuthController{
         );
     }
 
-    public function searchTimelineName(){
+    public function searchTimelineName()
+    {
         $timeline_name = TimeLineRepository::findAllByName($_POST['name']);
-        if($timeline_name == null){
+        if ($timeline_name == null) {
             throw new ForbiddenException("This record not found.");
         }
         return Response::message(

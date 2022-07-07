@@ -1,7 +1,7 @@
 {
   "disks": [
     {
-      "name": "my-disk",
+      "name": "timino2",
       "mountTo": "public"
     }
   ]
