@@ -1,6 +1,6 @@
 <?php
 try {
-    require_once 'vendor/autoload.php';
+    require 'vendor/autoload.php';
     require 'manage-project/config.php';
     require 'bootstrap/dotenv.php';
     require 'bootstrap/config.php';
@@ -28,20 +28,20 @@ try {
                     generate_migration($second_subcommand);
                     break;
                 default:
-                    help();
+                    help_command();
                     break;
             }
             break;
         case "migrate":
             migrate();
             break;
-        default :
+        case "help":
             help();
+            break;
+        default :
+            help_command();
             break;
     }
 } catch (ErrorException $e) {
-    echo "\n";
-    echo $e->getMessage();
-} finally {
-    echo "\n\n";
+    echo $e->getMessage()."\n";
 }
