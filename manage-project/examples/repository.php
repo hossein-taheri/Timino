@@ -4,7 +4,7 @@ namespace Repository;
 
 use Helpers\PDOHelper;
 
-class REPOSITORY_NAMERepository
+class REPOSITORY_NAME
 {
     // TODO :: write your functions and your own queries
     public static function findOne()

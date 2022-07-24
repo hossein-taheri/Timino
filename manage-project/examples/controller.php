@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-class CONTROLLER_NAMEController
+class CONTROLLER_NAME
 {
     // TODO :: write your code here
 }

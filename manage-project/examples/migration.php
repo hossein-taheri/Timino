@@ -2,7 +2,7 @@
 
 namespace Migration;
 
-class MIGRATION_NAMEMigration
+class MIGRATION_NAME
 {
     public static function create()
     {
