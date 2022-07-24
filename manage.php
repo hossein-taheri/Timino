@@ -1,11 +1,13 @@
 <?php
 try {
-    error_reporting(E_ALL ^ E_NOTICE);
-
-    require "./manage-project/generator.php";
-    require "./manage-project/migrate.php";
-    require "./manage-project/help.php";
-
+    require_once 'vendor/autoload.php';
+    require 'manage-project/config.php';
+    require 'bootstrap/dotenv.php';
+    require 'bootstrap/config.php';
+    require 'bootstrap/database.php';
+    require 'manage-project/generator.php';
+    require 'manage-project/migrate.php';
+    require 'manage-project/help.php';
 
     $first_subcommand = $argv[1];
     $second_subcommand = $argv[2];

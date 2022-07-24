@@ -1,0 +1,14 @@
+[
+  "UserMigration",
+  "ForgotPasswordMigration",
+  "VerifyEmailMigration",
+  "TimeLineMigration",
+  "TimelineMemberMigration",
+  "ChatMessageMigration",
+  "EventMigration",
+  "LikeMigration",
+  "EventMessageMigration",
+  "CommentMigration",
+  "CategoryMigration",
+  "EventCategoryMigration"
+]

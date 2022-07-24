@@ -1,44 +1,16 @@
 <?php
 
-require "migrations/UserMigration.php";
-require "migrations/ForgotPasswordMigration.php";
-require "migrations/VerifyEmailMigration.php";
-require "migrations/TimeLineMigration.php";
-require "migrations/TimelineMemberMigration.php";
-require "migrations/ChatMessageMigration.php";
-require "migrations/EventMigration.php";
-require "migrations/LikeMigration.php";
-require "migrations/EventMessageMigration.php";
-require "migrations/CommentMigration.php";
-require "migrations/CategoryMigration.php";
-require "migrations/EventCategoryMigration.php";
-
-
-use Migration\CategoryMigration;
-use Migration\ChatMessageMigration;
-use Migration\CommentMigration;
-use Migration\EventCategoryMigration;
-use Migration\EventMessageMigration;
-use Migration\EventMigration;
-use Migration\LikeMigration;
-use Migration\TimelineMemberMigration;
-use Migration\UserMigration;
-use Migration\ForgotPasswordMigration;
-use Migration\VerifyEmailMigration;
-use Migration\TimeLineMigration;
-
 function migrate()
 {
-    UserMigration::create();
-    ForgotPasswordMigration::create();
-    VerifyEmailMigration::create();
-    TimeLineMigration::create();
-    TimelineMemberMigration::create();
-    ChatMessageMigration::create();
-    EventMigration::create();
-    EventMessageMigration::create();
-    LikeMigration::create();
-    CommentMigration::create();
-    CategoryMigration::create();
-    EventCategoryMigration::create();
+    $migrations = json_decode(file_get_contents("./manage-project/migration_files_list.json"), true);
+    foreach ($migrations as $migration) {
+        try {
+            require "migrations/$migration.php";
+            $className = 'Migration\\' . $migration;
+            $className::create();
+            echo "$migration migrated successfully.\n";
+        } catch (ErrorException $err) {
+            echo "$migration migration failed" . "\n";
+        }
+    }
 }

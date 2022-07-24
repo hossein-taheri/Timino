@@ -16,9 +16,7 @@ function generate_controller($name = null)
         throw new ErrorException("$name.php already exists in controller directory");
     }
 
-    $file = fopen("./controllers/$name.php", "wb");
-    fwrite($file, $content);
-    fclose($file);
+    writeContentInFile("./controllers/$name.php", $content);
 }
 
 /**
@@ -37,9 +35,7 @@ function generate_middleware($name = null)
         throw new ErrorException("$name.php already exists in middlewares directory");
     }
 
-    $file = fopen("./middlewares/$name.php", "wb");
-    fwrite($file, $content);
-    fclose($file);
+    writeContentInFile("./middlewares/$name.php", $content);
 }
 
 /**
@@ -58,9 +54,7 @@ function generate_repository($name = null)
         throw new ErrorException("$name.php already exists in repositories directory");
     }
 
-    $file = fopen("./repositories/$name.php", "wb");
-    fwrite($file, $content);
-    fclose($file);
+    writeContentInFile("./repositories/$name.php", $content);
 }
 
 /**
@@ -72,14 +66,19 @@ function generate_migration($name = null)
         throw new ErrorException("Enter the migration name");
     }
     $content = file_get_contents("./manage-project/examples/migration.php");
+    $table_name = strtolower($name) . "s";
     $name .= 'Migration';
     $content = str_replace("MIGRATION_NAME", $name, $content);
+    $content = str_replace("TABLE_NAME", $table_name, $content);
 
     if (file_exists("./migrations/$name.php")) {
         throw new ErrorException("$name.php already exists in migrations directory");
     }
 
-    $file = fopen("./migrations/$name.php", "wb");
-    fwrite($file, $content);
-    fclose($file);
+    writeContentInFile("./migrations/$name.php", $content);
+
+    $json = json_decode(file_get_contents("./manage-project/migration_files_list.json"), true);
+    $json[] = $name;
+    $json = json_encode($json);
+    writeContentInFile("./manage-project/migration_files_list.json", $json);
 }
