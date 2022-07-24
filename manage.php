@@ -17,13 +17,13 @@ try {
                     generate_controller($second_subcommand);
                     break;
                 case "generate:middleware":
-                    generate_middleware();
+                    generate_middleware($second_subcommand);
                     break;
                 case "generate:repository":
-                    generate_repository();
+                    generate_repository($second_subcommand);
                     break;
                 case "generate:migration":
-                    generate_migration();
+                    generate_migration($second_subcommand);
                     break;
                 default:
                     help();
@@ -38,7 +38,8 @@ try {
             break;
     }
 } catch (ErrorException $e) {
+    echo "\n";
     echo $e->getMessage();
 } finally {
-    echo "\n";
+    echo "\n\n";
 }
