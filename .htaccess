@@ -3,9 +3,11 @@
         Options -MultiViews -Indexes
     </IfModule>
     <IfModule mod_headers.c>
-        Header set Access-Control-Allow-Origin "*"
-        Header set Access-Control-Allow-Credentials "true"
-        Header set Access-Control-Max-Age "30"
+        Header add Access-Control-Allow-Origin "*"
+        Header add Access-Control-Allow-Methods "*"
+        Header add Access-Control-Allow-Credentials "true"
+        Header add Access-Control-Max-Age "30"
+        Header add Access-Control-Allow-Headers "*"
     </IfModule>
 
     RewriteEngine On

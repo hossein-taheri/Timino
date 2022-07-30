@@ -11,6 +11,5 @@ try {
     $pdo->query("use " . $db['dbname']);
     $GLOBALS['pdo'] = $pdo;
 } catch (PDOException $e) {
-    die("Couldn't connect to DB::" . $e->getMessage() . "\n");
+    die("Couldn't connect to DB::" . $e->getMessage());
 }
-
